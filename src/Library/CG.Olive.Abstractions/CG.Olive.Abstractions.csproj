@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>CG.Olive</RootNamespace>
+    <Authors>Martin Cook</Authors>
+    <Company>CodeGator</Company>
+    <Description>This assembly contains abstractions for the CG.Olive library.</Description>
+    <Copyright>Copyright © 2020 - 2021 by CodeGator. All rights reserved.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CodeGator/CG.Olive</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CodeGator/CG.Olive</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\net5.0\CG.Olive.Abstractions.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CG.Business" Version="2021.2.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.194">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CG.Business">
+      <HintPath>..\..\..\..\..\Packages\CG.Business\src\CG.Business\bin\Debug\net5.0\CG.Business.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

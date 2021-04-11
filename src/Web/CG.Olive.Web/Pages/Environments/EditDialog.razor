@@ -1,0 +1,19 @@
+﻿<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+    <MudDialog>
+        <TitleContent>
+            <div class="d-flex">
+                <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Edit" class="mr-3"></MudIcon>
+                <MudText>@Caption</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <DataAnnotationsValidator />
+            <MudTextField @bind-Value="@Model.Name" For="(() => Model.Name)" Label="Name" />
+            <MudCheckBox @bind-Checked="@Model.IsDefault" For="(() => Model.IsDefault)" Label="Default"></MudCheckBox>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save Changes</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

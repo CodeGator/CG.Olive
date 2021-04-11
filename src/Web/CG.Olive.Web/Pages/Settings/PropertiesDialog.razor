@@ -1,0 +1,19 @@
+﻿<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+    <MudDialog>
+        <TitleContent>
+            <div class="d-flex">
+                <MudIcon Size="Size.Small" Icon="@Icons.Outlined.Settings" class="mr-3"></MudIcon>
+                <MudText>Properties</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <MudTextField @bind-Value="@Model.CreatedDate" For="(() => Model.CreatedDate)" Label="Created Date" ReadOnly />
+            <MudTextField @bind-Value="@Model.CreatedBy" For="(() => Model.CreatedBy)" Label="Created By" ReadOnly />
+            <MudTextField @bind-Value="@Model.UpdatedDate" For="(() => Model.UpdatedDate)" Label="Updated Date" ReadOnly />
+            <MudTextField @bind-Value="@Model.UpdatedBy" For="(() => Model.UpdatedBy)" Label="Updated By" ReadOnly />
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">OK</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

@@ -1,0 +1,107 @@
+﻿@page "/environments"
+@attribute [Authorize]
+
+@using Environment = CG.Olive.Models.Environment
+
+<MudBreadcrumbs Items="_crumbs"></MudBreadcrumbs>
+
+<MudText Typo="Typo.h4">Environments</MudText>
+<MudText Class="pb-5" Typo="Typo.body1">Use this page to manage environments</MudText>
+
+<ErrorBlock Dismissable Content="@_error" />
+<InfoBlock Dismissable Content="@_info" />
+
+<HelpBlock Visible="@(!EnvironmentStore.AsQueryable().Any())"
+           Content="No environments created yet!">
+    <ChildContent>
+        <MudText Color="@Color.Info"
+                 Typo="@Typo.body1"
+                 Class="pl-3">
+             Press the button below to create your first environment!
+        </MudText>
+        <MudButton Variant="@Variant.Outlined"
+                   StartIcon="@Icons.Outlined.Add"
+                   Size="Size.Small"
+                   OnClick="OnAddEnvironmentAsync">
+            Create Environment
+        </MudButton>
+    </ChildContent>
+</HelpBlock>
+
+@if (EnvironmentStore.AsQueryable().Any())
+{
+    <MudCard Elevation="0">
+        <MudCardContent>
+            <MudGrid Justify="@Justify.Center">
+                <MudItem xs="2" md="2"></MudItem>
+                <MudItem xs="8" md="8">
+                    <MudTable Items="@EnvironmentStore.AsQueryable()"
+                              Elevation="0"
+                              Dense>
+                        <ToolBarContent>
+                            <MudButton Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Outlined.Add"
+                                       Size="Size.Small"
+                                       OnClick="OnAddEnvironmentAsync">
+                                    Add
+                                </MudButton>                
+                        </ToolBarContent>
+                        <ColGroup>
+                            <col style="width: 15px;" />
+                            <col />
+                            <col style="width: 250px;" />
+                        </ColGroup>
+                        <HeaderContent>
+                            <MudTh>
+                                <MudTableSortLabel SortBy="new Func<Environment, object>(x=>x.IsDefault)">
+                                    Default
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh>
+                                <MudTableSortLabel InitialDirection="SortDirection.Ascending" 
+                                                   SortBy="new Func<Environment, object>(x=>x.Name)">
+                                    Name
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Default"
+                                   Class="@(context.IsDefault ? "default" : "")" >
+                                <MudCheckBox @bind-Checked="@context.IsDefault" 
+                                             @onclick="@(() => OnDefaultChangeAsync(context))">
+                                </MudCheckBox>
+                            </MudTd>
+                            <MudTd DataLabel="Name"
+                                   Class="@(context.IsDefault ? "default" : "")">
+                               @context.Name
+                            </MudTd>
+                            <MudTd>
+                                <MudTooltip Text="Edit">
+                                    <MudIconButton Icon="@Icons.Outlined.Edit"
+                                                   Size="Size.Small"
+                                                   OnClick="@(() => OnEditEnvironmentAsync(context))" />
+                                </MudTooltip>
+                                <MudTooltip Text="Delete">
+                                    <MudIconButton Icon="@Icons.Outlined.Delete"
+                                                   Size="Size.Small"
+                                                   OnClick="@(() => OnDeleteEnvironmentAsync(context))" />
+                                </MudTooltip>
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[]{10, 20, 50}" />
+                        </PagerContent>
+                    </MudTable>
+                </MudItem>
+                <MudItem xs="2" md="2"></MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+}
+
+<style>
+.default {
+    background-color: lightyellow;
+}
+</style>

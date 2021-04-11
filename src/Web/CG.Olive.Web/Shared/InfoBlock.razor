@@ -1,0 +1,12 @@
+﻿@if (false == string.IsNullOrEmpty(Content))
+{
+    <MudAlert Class="pb-2 px-5"
+              Severity="Severity.Info" 
+              Variant="Variant.Outlined" 
+              Style="min-width: 400px; max-width: 90%; background-color: white;"
+              Dense
+              Elevation="1"
+              OnClick=@(() => Content = Dismissable ? "" : Content)>
+        @Content
+    </MudAlert>
+}

@@ -1,0 +1,164 @@
+﻿@page "/settings"
+@attribute [Authorize]
+
+@using Setting = CG.Olive.Models.Setting
+
+<MudBreadcrumbs Items="_crumbs"></MudBreadcrumbs>
+
+<MudText Typo="Typo.h4">
+    Settings
+</MudText>
+<MudText Class="pb-5" 
+         Typo="Typo.body1">
+    Use this page to manage values for individual settings
+</MudText>
+
+<ErrorBlock Dismissable Content="@_error" />
+<InfoBlock Dismissable Content="@_info" />
+
+<HelpBlock Visible="@(!ApplicationStore.AsQueryable().Any() || !EnvironmentStore.AsQueryable().Any())"
+           Content="Settings require an application and an environment, but, that data hasn't been created yet!">
+    <ChildContent>
+        <MudText Class="px-5 pb-1" 
+                 Color="Color.Info" 
+                 Typo="Typo.body1">
+             Go <a href="/applications">HERE</a> to create one or more applications
+         </MudText>
+        <MudText Class="px-5 pb-1" 
+                 Color="Color.Info" 
+                 Typo="Typo.body1">
+             Go <a href="/environments">HERE</a> to create one or more environments
+        </MudText>             
+    </ChildContent>
+</HelpBlock>
+
+@if (ApplicationStore.AsQueryable().Any() && EnvironmentStore.AsQueryable().Any())
+{
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="2" md="2"></MudItem>
+                    <MudItem xs="8" md="8">
+                        @if (!_query.Any())
+                        {
+                            <div class="d-flex">
+                                <MudIcon Icon="@Icons.Outlined.Help" 
+                                         Class="mr-3"
+                                         Color="Color.Info"
+                                         Size="Size.Small" />
+                                <MudText Typo="Typo.body1"
+                                         Color="Color.Info">
+                                    To get started, choose an application and environment from the lists below.
+                                </MudText>
+                            </div>
+                        }
+                    </MudItem>
+                    <MudItem xs="2" md="2"></MudItem>
+                    <MudItem xs="2" md="2"></MudItem>
+                    <MudItem xs="4" md="4">
+                        <MudSelect T="CG.Olive.Models.Application"
+                                   Label="Application"
+                                   SelectedValuesChanged="OnApplicationChanged">
+                            @foreach (var item in ApplicationStore.AsQueryable())
+                            {
+                                <MudSelectItem Value="@item">
+                                    @item.Name
+                                </MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="4" md="4">
+                        <MudSelect T="CG.Olive.Models.Environment"
+                                   Label="Environment"
+                                   SelectedValuesChanged="OnEnvironmentChanged">
+                            @foreach (var item in EnvironmentStore.AsQueryable())
+                            {
+                                <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="2" md="2"></MudItem>
+                </MudGrid>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="2" md="2"></MudItem>
+                <MudItem xs="8" md="8">
+                    @if (_query.Any())
+                    {
+                        <MudTable T="CG.Olive.Models.Setting" 
+                                    Items="_query" 
+                                    Elevation="0" 
+                                    Dense="true">
+                            <ColGroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col style="width: 125px;" />
+                            </ColGroup>
+                            <HeaderContent>
+                                <MudTh>
+                                    <MudTableSortLabel InitialDirection="SortDirection.Ascending" 
+                                                        SortBy="new Func<Setting, object>(x=>x.Key)">
+                                        Key
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh>
+                                    <MudTableSortLabel SortBy="new Func<Setting, object>(x=>x.Value)">
+                                        Value
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh>
+                                    <MudTableSortLabel SortBy="new Func<Setting, object>(x=>x.Comment)">
+                                        Comment
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh></MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Key">
+                                    @context.Key
+                                </MudTd>
+                                <MudTd Style="@(null == context.Value ? "color: grey;" : "")"
+                                        DataLabel="Key">
+                                    @(null == context.Value ? "N/A" : context.Value)
+                                </MudTd>
+                                <MudTd DataLabel="Comment">
+                                    @context.Comment
+                                    </MudTd>
+                                <MudTd>
+                                    <MudTooltip Text="Edit">
+                                        <MudIconButton Icon="@Icons.Outlined.Edit"
+                                                        Size="Size.Small"
+                                                        OnClick=@(() => OnEditSettingAsync(context)) />
+                                    </MudTooltip>
+                                    <MudTooltip Text="Properties">
+                                        <MudIconButton Icon="@Icons.Outlined.Settings"
+                                                    Size="Size.Small"
+                                                    OnClick=@(() => OnPropertiesAsync(context)) />
+                                    </MudTooltip>
+                                </MudTd>
+                            </RowTemplate>
+                            <PagerContent>
+                                <MudTablePager PageSizeOptions="new int[]{10, 20, 50}" />
+                            </PagerContent>
+                        </MudTable>
+                    }
+                    else
+                    {
+                        <MudText Class="pt-5" 
+                                 Typo="Typo.h6">
+                            No settings
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            Select an application or environment above, or upload a file.
+                        </MudText>
+                    }
+                </MudItem>            
+                <MudItem xs="2" md="2"></MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+}

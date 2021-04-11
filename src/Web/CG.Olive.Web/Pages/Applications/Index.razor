@@ -1,0 +1,128 @@
+﻿@page "/applications"
+@attribute [Authorize]
+
+@using Application = CG.Olive.Models.Application
+
+<MudBreadcrumbs Items="_crumbs"></MudBreadcrumbs>
+
+<MudText Typo="Typo.h4">
+    Applications
+</MudText>
+<MudText Class="pb-5" 
+         Typo="Typo.body1">
+     Use this page to manage applications
+</MudText>
+
+<ErrorBlock Dismissable Content="@_error" />
+<InfoBlock Dismissable Content="@_info" />
+
+<HelpBlock Visible="@(!ApplicationStore.AsQueryable().Any())"
+           Content="No applications created yet!">
+    <ChildContent>
+        <MudText Color="@Color.Info"
+                 Typo="@Typo.body1"
+                 Class="pl-3">
+             Press the button below to create your first application!
+        </MudText>
+        <MudButton Variant="@Variant.Outlined"
+                   StartIcon="@Icons.Outlined.Add"
+                   Size="Size.Small"
+                   OnClick="OnAddApplicationAsync">
+            Create Application
+        </MudButton>        
+    </ChildContent>
+</HelpBlock>
+
+@if (ApplicationStore.AsQueryable().Any())
+{
+    <MudCard Elevation="0">
+        <MudCardContent>
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="2" md="2"></MudItem>
+                <MudItem xs="8" md="8">
+                    <MudTable Items="@ApplicationStore.AsQueryable()"
+                              Elevation="0"
+                              Dense>
+                        <ToolBarContent>
+                            <MudButton Variant="Variant.Outlined"
+                                       StartIcon="@Icons.Outlined.Add"
+                                       Size="Size.Small"
+                                       OnClick="OnAddApplicationAsync">
+                                    Add
+                                </MudButton>                
+                        </ToolBarContent>
+                        <ColGroup>
+                            <col style="width: 15px;" />
+                            <col />
+                            <col />
+                            <col />
+                            <col style="width: 250px;" />
+                        </ColGroup>
+                        <HeaderContent>
+                            <MudTh>
+                                <MudTableSortLabel SortBy="new Func<Application, object>(x=>x.IsLocked)">
+                                    Locked
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh>
+                                <MudTableSortLabel InitialDirection="SortDirection.Ascending" 
+                                                   SortBy="new Func<Application, object>(x=>x.Name)">
+                                    Name
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh>
+                                <MudTableSortLabel SortBy="new Func<Application, object>(x=>x.Sid)">
+                                    Sid
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh>
+                                <MudTableSortLabel SortBy="new Func<Application, object>(x=>x.SKey)">
+                                    SKey
+                                </MudTableSortLabel>
+                            </MudTh>                    
+                            <MudTh></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Locked"
+                                   Class="@(context.IsLocked ? "locked" : "")" >
+                                <MudCheckBox @bind-Checked="@context.IsLocked" 
+                                             @onclick="@(() => OnLockChangeAsync(context))">
+                                </MudCheckBox>
+                            </MudTd>
+                            <MudTd DataLabel="Name"
+                                   Class="@(context.IsLocked ? "locked" : "")">@context.Name</MudTd>
+                            <MudTd DataLabel="Sid"
+                                   Class="@(context.IsLocked ? "locked" : "")">@context.Sid</MudTd>
+                            <MudTd DataLabel="SKey"
+                                   Class="@(context.IsLocked ? "locked" : "")">@context.SKey</MudTd>
+                            <MudTd>
+                                <MudTooltip Text="Edit">
+                                    <MudIconButton Icon="@Icons.Outlined.Edit"
+                                                   Size="Size.Small"
+                                                   OnClick="@(() => OnEditApplicationAsync(context))" />
+                                </MudTooltip>
+                                <MudTooltip Text="Delete">
+                                    <MudIconButton Icon="@Icons.Outlined.Delete"
+                                                   Size="Size.Small"
+                                                   OnClick="@(() => OnDeleteApplicationAsync(context))" />
+                                </MudTooltip>
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager PageSizeOptions="new int[]{10, 20, 50}" />
+                        </PagerContent>
+                    </MudTable>
+                </MudItem>
+                <MudItem xs="2" md="2"></MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+}
+
+<style>
+.locked {
+    background-color: #d0d0d0
+}
+</style>
+
+

@@ -1,0 +1,240 @@
+﻿@page "/uploads"
+@attribute [Authorize]
+
+@using Upload = CG.Olive.Models.Upload
+
+<MudBreadcrumbs Items="_crumbs"></MudBreadcrumbs>
+
+<MudText Typo="Typo.h4">Uploads</MudText>
+<MudText Class="pb-5" Typo="Typo.body1">Use this page to manage file uploads.</MudText>
+
+<ErrorBlock Dismissable Content="@_error" />
+<InfoBlock Dismissable Content="@_info" />
+
+<HelpBlock Visible="@(!ApplicationStore.AsQueryable().Any() || !EnvironmentStore.AsQueryable().Any())"
+           Content="SUploads require an application and an environment, but, that data hasn't been created yet.">
+    <ChildContent>
+        <MudText Class="px-5 pb-1" 
+                 Color="Color.Info" 
+                 Typo="Typo.body1">
+             Go <a href="/applications">HERE</a> to create one or more applications
+         </MudText>
+        <MudText Class="px-5 pb-1" 
+                 Color="Color.Info" 
+                 Typo="Typo.body1">
+             Go <a href="/environments">HERE</a> to create one or more environments
+         </MudText>                    
+    </ChildContent>
+</HelpBlock>
+
+@if (ApplicationStore.AsQueryable().Any() && EnvironmentStore.AsQueryable().Any())
+{
+    <MudCard Elevation="0">
+        <MudCardContent>
+            <MudGrid Justify="@Justify.Center">
+                <MudItem xs="2" md="2"></MudItem>
+                <MudItem xs="8" md="8">
+                    <MudTabs @ref="_tabs"
+                             Elevation="0" 
+                             Rounded="true" 
+                             ApplyEffectsToContainer="true">
+                        <MudTabPanel Text="Existing Uploads">
+                            <MudCard Elevation="0">
+                                <MudCardContent>
+                                    <MudText Class="pb-5" Typo="Typo.subtitle2">
+                                        This tab is for managing existing uploads
+                                    </MudText>
+                                    @if (UploadStore.AsQueryable().Any())
+                                    {
+                                        <MudTable Items="@UploadStore.AsQueryable()" 
+                                                  Elevation="0"
+                                                  Dense="true">
+                                            <ColGroup>
+                                                <col style="width: 20%;" />
+                                                <col style="width: 20%;" />
+                                                <col />
+                                                <col />
+                                                <col />
+                                            </ColGroup>
+                                            <HeaderContent>
+                                                <MudTh>
+                                                    <MudTableSortLabel InitialDirection="SortDirection.Ascending" 
+                                                                       SortBy="new Func<Upload, object>(x=>x.Application.Name)">
+                                                        Application
+                                                    </MudTableSortLabel>
+                                                </MudTh>
+                                                <MudTh>
+                                                    <MudTableSortLabel SortBy="new Func<Upload, object>(x=>x.Environment.Name)">
+                                                        Environment
+                                                    </MudTableSortLabel>
+                                                </MudTh>
+                                                <MudTh>
+                                                    <MudTableSortLabel SortBy="new Func<Upload, object>(x=>x.FileName)">
+                                                        File Name
+                                                    </MudTableSortLabel>
+                                                </MudTh>    
+                                                <MudTh>
+                                                    <MudTableSortLabel SortBy="new Func<Upload, object>(x=>x.Size)">
+                                                        File Size
+                                                    </MudTableSortLabel>
+                                                </MudTh>    
+                                                <MudTh></MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                <MudTd DataLabel="Application">
+                                                    @context.Application.Name
+                                                </MudTd>
+                                                <MudTd DataLabel="Environment">
+                                                    @(null == context.Environment ? "" : context.Environment.Name)
+                                                </MudTd>
+                                                <MudTd DataLabel="Name">
+                                                    @context.FileName
+                                                </MudTd>
+                                                <MudTd DataLabel="Size">
+                                                    @context.Size
+                                                </MudTd>
+                                                <MudTd>
+                                                    <MudTooltip Text="Delete">
+                                                        <MudIconButton Icon="@Icons.Outlined.Delete"
+                                                                       Size="Size.Small"
+                                                                       OnClick="@(() => OnDeleteUploadAsync(context))" />
+                                                    </MudTooltip>
+                                                </MudTd>
+                                            </RowTemplate>
+                                            <PagerContent>
+                                                <MudTablePager PageSizeOptions="new int[]{10, 20, 50}" />
+                                            </PagerContent>
+                                        </MudTable>
+                                    }
+                                    else
+                                    {
+                                        <MudText Class="px-5 pb-5" Typo="Typo.subtitle2">
+                                            No uploads created yet!
+                                        </MudText>
+                                        <MudText Class="px-5" 
+                                                 Typo="Typo.body1"
+                                                 Color="Color.Info">
+                                             Select the "New Uploads" tab to create an upload.
+                                        </MudText>
+                                    }
+                                </MudCardContent>
+                            </MudCard>
+                        </MudTabPanel>
+                        <MudTabPanel Text="New Uploads">
+                            <MudCard Elevation="0">
+                                <MudCardContent>
+                                    <MudText Class="pb-5" 
+                                             Typo="Typo.subtitle2">
+                                        This tab is for creating new uploads
+                                    </MudText>
+                                    <MudText Class="pb-5" 
+                                             Typo="Typo.body1"
+                                             Color="Color.Info">
+                                         Use the button below to choose one or more JSON files to upload.
+                                    </MudText>
+                                    <MudForm @ref="_form"
+                                             Class="px-5">
+                                        <InputFile id="fileInput" 
+                                                    OnChange="OnFileChange" 
+                                                    hidden multiple accept=".json" />
+                                        <MudButton HtmlTag="label"
+                                                    Variant="Variant.Filled"
+                                                    Color="Color.Primary"
+                                                    StartIcon="@Icons.Filled.SelectAll"
+                                                    Size="Size.Small"
+                                                    for="fileInput">
+                                            Select Files
+                                        </MudButton>
+                                        @if (_preUploads.Any())
+                                        {
+                                            <MudText Class="pt-5 pb-5" 
+                                                     Typo="Typo.body1"
+                                                     Color="Color.Info">
+                                                 Use the grid below to configure each file for uploading.
+                                             </MudText>
+                                            <MudTable Items="_preUploads"
+                                                        Elevation="0"
+                                                        Hover="true"
+                                                        Dense="true">
+                                                <ColGroup>
+                                                    <col style="width: 20%;" />
+                                                    <col style="width: 20%;" />
+                                                    <col />
+                                                    <col />
+                                                    <col />
+                                                </ColGroup>
+                                                <HeaderContent>
+                                                    <MudTh>Application</MudTh>
+                                                    <MudTh>Environment</MudTh>
+                                                    <MudTh>Name</MudTh>
+                                                    <MudTh>Size</MudTh>                                
+                                                    <MudTh>&nbsp;</MudTh>
+                                                </HeaderContent>
+                                                <RowTemplate>
+                                                    <MudTd DataLabel="Application">
+                                                        <MudSelect T="CG.Olive.Models.Application" 
+                                                                    Required
+                                                                    SelectedValuesChanged="@(e => OnApplicationChanged(context.File, e))">
+                                                            @foreach (var item in ApplicationStore.AsQueryable())
+                                                            {
+                                                                <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                                                            }
+                                                        </MudSelect>
+                                                    </MudTd>
+                                                    <MudTd DataLabel="Environment">
+                                                            <MudSelect T="CG.Olive.Models.Environment" 
+                                                                    Required
+                                                                    SelectedValuesChanged="@(e => OnEnvironmentChanged(context.File, e))">
+                                                            @foreach (var item in EnvironmentStore.AsQueryable())
+                                                            {
+                                                                <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                                                            }
+                                                        </MudSelect>
+                                                    </MudTd>
+                                                        <MudTd DataLabel="Name">@context.File.Name</MudTd>
+                                                        <MudTd DataLabel="Size">@context.File.Size.FormattedAsBytes()</MudTd>
+                                                    <MudTd>
+                                                        <MudButton Variant="Variant.Outlined" 
+                                                                    StartIcon="@Icons.Outlined.Delete"
+                                                                    Size="Size.Small"
+                                                                    OnClick="@(() => OnDeletePreUploadAsync(context))">Delete</MudButton>
+                                                    </MudTd>
+                                                </RowTemplate>
+                                            </MudTable>
+                                        }
+                                    </MudForm>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    @if (_preUploads.Any())
+                                    {
+                                        <MudCard Elevation="0">
+                                            <MudCardContent>
+                                                  <MudText Color="Color.Info" 
+                                                           Typo="Typo.body1">
+                                                       Remember to press the button below or you won't have uploaded anything!
+                                                   </MudText>
+                                            </MudCardContent>
+                                            <MudCardActions>
+                                                <MudButton Class="px-5"
+                                                       Variant="Variant.Outlined"  
+                                                       Size="Size.Small"
+                                                       Color="Color.Primary"
+                                                       StartIcon="@Icons.Outlined.CloudUpload"
+                                                       OnClick="OnSubmitAsync">
+                                                    Submit
+                                                </MudButton> 
+                                            </MudCardActions>
+                                        </MudCard>
+                                    }        
+                                </MudCardActions>
+                            </MudCard>
+                        </MudTabPanel>
+                    </MudTabs>
+                </MudItem>
+                <MudItem xs="2" md="2"></MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+}
+

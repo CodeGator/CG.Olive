@@ -1,0 +1,58 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+@*<MudDialogProvider />*@
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" 
+                       Color="Color.Inherit" 
+                       Edge="Edge.Start" 
+                       OnClick="@((e) => DrawerToggle())" />
+        <MudAppBarSpacer />
+        <AuthorizeView>
+            <Authorized>
+                <MudButton Variant="Variant.Text" Color="Color.Inherit">
+                    @(context.User.GetEmail())
+                </MudButton>
+            </Authorized>
+            <NotAuthorized>
+                <MudButton Link="/Account/Login"
+                           Variant="Variant.Text"
+                           EndIcon="@Icons.Outlined.Login"
+                           Color="Color.Inherit">
+                    Log in
+                </MudButton>
+            </NotAuthorized>
+        </AuthorizeView>
+        &nbsp;
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" 
+                       Color="Color.Inherit" 
+                       Size="Size.Large"
+                       Link="https://github.com/codegator/CG.Olive" 
+                       Target="_blank" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">@typeof(MainLayout).Assembly.ReadTitle()</MudText>
+        </MudDrawerHeader>
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Style="padding-bottom: 34px; height: 100vh;">
+        @Body
+        <MudAppBar Elevation="1" 
+                   Style="top: auto; bottom: 0; background-color: gray">
+            <p class="small">Copyright &copy; 2018 - @DateTime.Today.Year by CODEGATOR. All rights reserved</p>
+        </MudAppBar>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen = true;
+    private void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
+

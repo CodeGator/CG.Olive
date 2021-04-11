@@ -1,0 +1,15 @@
+﻿<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <AuthorizeView>
+        <Authorized>
+            <MudNavLink Href="/applications" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Apps">Applications</MudNavLink>
+            <MudNavLink Href="/configuration" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VideoSettings">Configuration</MudNavLink>
+            <MudNavLink Href="/environments" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Panorama">Environments</MudNavLink>
+            <MudNavLink Href="/settings" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Plagiarism">Settings</MudNavLink>
+            <MudNavLink Href="/uploads" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CloudUpload">Uploads</MudNavLink>
+        </Authorized>
+        <NotAuthorized>
+
+        </NotAuthorized>
+    </AuthorizeView>
+</MudNavMenu>

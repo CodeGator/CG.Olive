@@ -1,0 +1,18 @@
+﻿@if (Visible)
+{
+    <div class="help-block">
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Outlined.Help" 
+                        Class="mr-3"
+                        Color="@Color.Info"
+                        Size="@Size.Small" />
+            <MudText Color="@Color.Info" 
+                        Typo="@Typo.body1">
+                @Content
+            </MudText>
+        </div>
+        <div class="px-5 pt-2">
+            @ChildContent
+        </div>
+    </div>
+}
