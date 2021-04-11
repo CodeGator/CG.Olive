@@ -76,5 +76,14 @@ steps:
     git push origin gh-pages -q
   displayName: "Publish docs"  
 
-
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(69c34fe1-3efb-4616-85b9-0f1e8e4948f1)'
+    appType: 'webApp'
+    WebAppName: 'cg-olive'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'codegator-rg'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
