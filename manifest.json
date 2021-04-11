@@ -1,0 +1,1049 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/1/s/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Models.Application.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Models.Application.html",
+          "hash": "zeySumYJ6f07irnP5+MqPiafUEp8VpL07BaxLDtdkGg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Models.Environment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Models.Environment.html",
+          "hash": "w3YP8zh/d64MQuQW7lI0rdAVCjqFVrglb4827bkHIQg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Models.GuardExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Models.GuardExtensions.html",
+          "hash": "5OFzY9wlcCeTAqKWstNoMJNHrGkWWhIypJIx4yGlW80="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Models.Setting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Models.Setting.html",
+          "hash": "W12nt+DLfvow8zRbRw7ZQ4+4fCOvdrt2UflfJrcHvcA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Models.Upload.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Models.Upload.html",
+          "hash": "v4xAa5OtGXHRr5zUgrQxAEdInGRQ1wEXJ9LyatAM8Zw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Models.html",
+          "hash": "xDVlPqrdVtBzV/DDDfjSAgFWnqaj1SaIERNEWy+6Op4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Repositories.IApplicationRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Repositories.IApplicationRepository.html",
+          "hash": "3rdE8TnOiO3u5qDAgRkSzNxFXbrwB8c+8gqvZSDi8aY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Repositories.IEnvironmentRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Repositories.IEnvironmentRepository.html",
+          "hash": "+y1bSEGr2AXsXJ+VSNHQm9s4diUm1f8S14Tw7EKQUfs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Repositories.ISettingRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Repositories.ISettingRepository.html",
+          "hash": "IeOOdkthXKkbSq1ItcT/8MxD9oU4q/cqbLTK5vYAI3I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Repositories.IUploadRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Repositories.IUploadRepository.html",
+          "hash": "dI35iA1A6SuRjEvFbz7f9HgyyNrsfaoc1mFkNIUp7vg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Repositories.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Repositories.html",
+          "hash": "fUTl1iBG5HshYUCvCnoLdfHd/G/8xIexgzDZPgGBiCQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.DesignTimeBerylDbContextFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.DesignTimeBerylDbContextFactory.html",
+          "hash": "TYS/dkDS+dL9ddEuSXrJEbE7oX9FpStalHBwQktChjk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Migrations.InitialCreate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Migrations.InitialCreate.html",
+          "hash": "R5V118MYiera+VhBswBVZS6kPRwBtSQ3iHra6Dmrsi8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Migrations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Migrations.html",
+          "hash": "Z3ec/S/PP5raomBqnz2FZUCDZGn3ZR+DCx3vd7nyoSQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.OliveDbContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.OliveDbContext.html",
+          "hash": "sKQAbUspLCgROXM2fNpjdAag2y3Y8bMgNOBar3JmiTM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Options.OliveRepositoryOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Options.OliveRepositoryOptions.html",
+          "hash": "SZ3KVqvZ/NoUafWSnxntxNsuusgFw+PSBRwARcQIbjo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Options.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Options.html",
+          "hash": "vqe5o5od8rt3n9HECP7ImR4qBuIwXg1G+U1L6iXIokQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Repositories.ApplicationRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Repositories.ApplicationRepository.html",
+          "hash": "bEJrDuo6ozVu+m6IkFy88J8wVHXlPD8pXo4ZUqv5OrM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Repositories.EnvironmentRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Repositories.EnvironmentRepository.html",
+          "hash": "U8ALLIy/vgYnR53I9rxyS3qymaPUsC5FmatO8NP8Lj4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Repositories.SettingRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Repositories.SettingRepository.html",
+          "hash": "+ymIlNkFzyWNRET8o58mSRXFYJchprfchpDEyzQ/Hb0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Repositories.UploadRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Repositories.UploadRepository.html",
+          "hash": "KkwYvYW/8D86S8mkbflcQdmv4vokIEzpsIN9TxI/CT8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.Repositories.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.Repositories.html",
+          "hash": "s4DFeqUN16dvSV3WORTRg63E/jiHvIopGZT/d1UcEb4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.SqlServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.SqlServer.html",
+          "hash": "3uHZhTljxEtfnrpihWhrog36sXAyMeTZF8Z6vuhfsv0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.ApplicationStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.ApplicationStore.html",
+          "hash": "NVAYl6Wl55SLWoYyqiDPAJ38SES7fqGPlhRjeLd0eM4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.ConfigurationStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.ConfigurationStore.html",
+          "hash": "y8YQDVBBMZ5p/I1mHrMD2fD6uAkSgbEDBHVSz8vn7Mk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.EnvironmentStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.EnvironmentStore.html",
+          "hash": "W/A7VGdQ0vkL9TvsnlDIk3dPaVqUHDC+uMGUgrZhoEQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.IApplicationStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.IApplicationStore.html",
+          "hash": "rHsLs6kQr/lVZT9gKXX9zIJQpqJc48hJrUjYbOdTYf4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.IConfigurationStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.IConfigurationStore.html",
+          "hash": "oyDdnUoAyTqcRqxRhHp7J+1Sz+CJ/aja7gkEefb0T+M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.IEnvironmentStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.IEnvironmentStore.html",
+          "hash": "nIlBhlpCxO1kJAi+Xy/9eW3eVmnIdJU8f2hkLWaVh/I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.ISettingStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.ISettingStore.html",
+          "hash": "hatEYUsYLqY2SAnzMXKilv0DvxBXENrbr3RjcB8MI28="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.IUploadStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.IUploadStore.html",
+          "hash": "jWUE3McWmb1bhT2fLFp3h5bMpqzPlb4GaEWSU5w2r0A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.SettingStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.SettingStore.html",
+          "hash": "Kco0uskSOA2/dAeo5zqeH8DO1H1waKLOu+jVPek+Fxw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.UploadStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.UploadStore.html",
+          "hash": "X6a795Z31RNEdOT/fdpPgXyWtfSzr//yObST5DPUFE0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Stores.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Stores.html",
+          "hash": "a3fvTf+r7uHFphtQhoeYrPRl5DGLcx7WDp0yCgrxZu8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Controllers.ConfigurationController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Controllers.ConfigurationController.html",
+          "hash": "mx6TYUqHygPuPZ+r7JxnP9CwDDTKtcvw/5TW1gxj7Z8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Controllers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Controllers.html",
+          "hash": "IWhO3ef7gHXIFQgR6xFhkcDw2F6+p+xqedE1sJWU+Gs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Models.PreUpload.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Models.PreUpload.html",
+          "hash": "EePeqQV/oj9EGt25vRMJzZjNuHRKL7O2nNXh01D76lA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Models.html",
+          "hash": "wBPE9CSEB6m5lbPZfM15qyy54u++eBkLOYcDKpKvlxY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Options.ApiAuthOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Options.ApiAuthOptions.html",
+          "hash": "fH+N2RvKDhU/IHCjMvofjg0ZfuLXERj/hrlyvlyK40o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Options.IdentityOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Options.IdentityOptions.html",
+          "hash": "v72qqmTv4TXiU6lb6K3vSOosOZwuSLbO1gK4wultmj0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Options.OidcAuthOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Options.OidcAuthOptions.html",
+          "hash": "BVqy6q+OU9wEuaVwC3Es98NO0HHpYRx/Vyv7a3I1oeQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Options.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Options.html",
+          "hash": "M/irC1xI4XB9nTNcLRLmCdAPDceruDTox0jXWhiQh1g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Account.LoginModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Account.LoginModel.html",
+          "hash": "09NCrzykqvXNg37JIQ7NKVlMoOsUfSzHhn4QkkHckeY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Account.LogoutModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Account.LogoutModel.html",
+          "hash": "Zyb+DSk6vilp/598si7t3zzNExLkU6jZRGhL6UE61RY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Account.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Account.html",
+          "hash": "Y61ibrEBvmjcDTFzCUCDBcusgUJlYvUPdnBrXshPMbI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Applications.EditDialog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Applications.EditDialog.html",
+          "hash": "t2URPJGXtRIJQFzSanhp73doAfGXWHg2bBs42lIs7YM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Applications.Index.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Applications.Index.html",
+          "hash": "zqqD26thtqhNR3f0h8lDUrnS54fciFtq9lxsTspKfUo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Applications.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Applications.html",
+          "hash": "zcrLHBblPRw2nG4ZZzYXLm3HR9yuLwSZ4PnYBGkT+HU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Configuration.Index.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Configuration.Index.html",
+          "hash": "XsYQhVKGnqOhTzABeocTQ2rlghvolMQHH6l+xA86/0M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Configuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Configuration.html",
+          "hash": "elnXUJgD3D3jU45FEhbgARr4VNlo8vR5ptl1PDYcm+w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Environments.EditDialog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Environments.EditDialog.html",
+          "hash": "gbgZfJ1g/J6DLcJ4oVvAAI9LbN5mBR9Hk0KkY8I85hY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Environments.Index.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Environments.Index.html",
+          "hash": "C8CtQC9UQQtiJ2wgaVYjg4vlLqARh/oqdSGSlgimmvE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Environments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Environments.html",
+          "hash": "Kmn+SmnIcZ/5d1yWEzeTlpFL7v01n+49xQf8JzpmTcc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.ErrorModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.ErrorModel.html",
+          "hash": "DpRqESUG7aFJ6PKA0X+KSg2OcwGL0EWLbXVXJwZX8os="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Index.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Index.html",
+          "hash": "AF58WBTLdBUSrQ12ywNq+PgEVK2Elf3T/xFsg9d/dmE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Settings.EditDialog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Settings.EditDialog.html",
+          "hash": "DL+zwykXgHXZiW6WAhCNL4yjR1NtUkFNcd4hp3/2nY4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Settings.Index.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Settings.Index.html",
+          "hash": "d7/Gsarw1zyFt01cHp6mY5bps92Q0inLSOoADyG2/cU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Settings.PropertiesDialog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Settings.PropertiesDialog.html",
+          "hash": "mS/eEiSxCYim2ekl9w5OuUOTToCV9roaMcRko3VYWdI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Settings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Settings.html",
+          "hash": "n0OiKGGHcCuAh527eVlZhW2eVGFjROJUsc5SMuJrvAA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Uploads.Index.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Uploads.Index.html",
+          "hash": "hjUlg3BrRdNjxKWHdDBbM66Dhuxz+aNsUA6hMHj+SbQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.Uploads.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.Uploads.html",
+          "hash": "fcb8CgdarUIFyWk6zELSp1c8uDNeOKwA1NPgSRFdZns="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Pages.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Pages.html",
+          "hash": "usqvgJpcrXIbnvfs1O8fKHCd1L3TZL3VZ8yghaveDE4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Program.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Program.html",
+          "hash": "U6S2U1U5kYFGDi3ZeOFYCtjz9PsxvCAhaLCCSWMfEcs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Services.ITokenService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Services.ITokenService.html",
+          "hash": "xyfM0o2/AX8pQXTXrdf90ph/ud4mumBT8TdgL/SvWug="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Services.TokenProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Services.TokenProvider.html",
+          "hash": "hKly+IY9pF2WqPXjJeJz6ev+PIvHdCeQMfSd/gUii1g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Services.TokenService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Services.TokenService.html",
+          "hash": "DTAy8t2hveb0saX2j2wpatvGpAy8zFiTXOOMvtY/XRA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Services.html",
+          "hash": "OWyHfLZb1k9+R5s+pDAEv4RB29svcNH8v+WEn2l3Beg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Shared.ErrorBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Shared.ErrorBlock.html",
+          "hash": "gTGBg163baDHYDy4dyXWTjvtk7dHA4S/xTrzE7m953U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Shared.HelpBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Shared.HelpBlock.html",
+          "hash": "7BN5nKsJ2bweqRcCrfwDeNXMsQtU8JTjfonjNQ9I2jI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Shared.InfoBlock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Shared.InfoBlock.html",
+          "hash": "GTmxS+Guk2WlAdaBahRtyn+D3VKPxgxTXXNH9ldo3n8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Shared.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Shared.html",
+          "hash": "twLAdrBimkH3eJiP6SKt5YNXBL/36oyRL7+ccJTB5t0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.Startup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.Startup.html",
+          "hash": "c77mk90ZGjmtC8CpRNpyBlvEqZzHWXbVGv7KhfAIk3U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CG.Olive.Web.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CG.Olive.Web.html",
+          "hash": "rj18Ecp7YzuKPlIgASxMOGyrejbhTkJv1vR/c+FJlGE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.AspNetCore.Builder.ApplicationBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.AspNetCore.Builder.ApplicationBuilderExtensions.html",
+          "hash": "422YawTVvUQgr9ILwUqAyi5xg/5MAAn5jnlosRaYVqw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.AspNetCore.Builder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.AspNetCore.Builder.html",
+          "hash": "185HHbpwm5MPind9q6racc0m953lkfXRk5eqlEFipro="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.html",
+          "hash": "jW45w2tOp0lixEfIUvWg065PB0y/VpYH/BJ6K9vQzbw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.html",
+          "hash": "dU0J77BqZMgHnDveMnsZ32EZHcIvRkKMLmptQ5fsi28="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "eDyI2VUpnGxDksvOmyR78njkxr02EO0pZI2OptbaM/M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "dajSEgtAs/v7CK5L21qL4vHgTdyUv0J7McsQOIiZpLA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "BlPxk5mtl2kgfcZUgkEguqiSAR/EUyUTT4EdebwkQvs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "VwKq+kiLpwdjtsh/Ci5HnSJ20GJZJFrrkwWzGljp9yM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "QJilzscI6Dxqv8Tm+sr3+GC6DPHlwUgGa2UWQhLBQZ8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 77,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
