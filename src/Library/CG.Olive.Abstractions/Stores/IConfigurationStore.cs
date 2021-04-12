@@ -19,10 +19,9 @@ namespace CG.Olive.Stores
         /// <param name="skey">The application security key to use for the operation.</param>
         /// <param name="environment">The optional environment name for the operation.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
-        /// <returns>A task to perform the operation that returns an enumerable sequence
-        /// of key-value pairs, that represent the configuration for the specified 
-        /// application and environment.</returns>
-        Task<IEnumerable<KeyValuePair<string, string>>> GetAsync(
+        /// <returns>A task to perform the operation that returns an array of key-value pairs 
+        /// that together, represent the configuration for the specified application and environment.</returns>
+        Task<KeyValuePair<string, string>[]> GetAsync(
             string sid,
             string skey,
             string environment,

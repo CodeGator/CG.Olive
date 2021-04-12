@@ -16,6 +16,12 @@ namespace CG.Olive.Web.Options
         #region Properties
 
         /// <summary>
+        /// This property contains a url to an identity authority.
+        /// </summary>
+        [Required]
+        public string Authority { get; set; }
+
+        /// <summary>
         /// This property contains configuration settings for authenticating the 
         /// internal REST API.
         /// </summary>

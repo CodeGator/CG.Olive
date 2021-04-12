@@ -17,12 +17,6 @@ namespace CG.Olive.Web.Options
         #region Properties
 
         /// <summary>
-        /// This property contains a url to an identity authority.
-        /// </summary>
-        [Required]
-        public string Authority { get; set; }
-
-        /// <summary>
         /// This property contains a client identifier for the website.
         /// </summary>
         [Required]

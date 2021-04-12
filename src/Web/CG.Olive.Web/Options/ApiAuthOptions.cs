@@ -23,12 +23,6 @@ namespace CG.Olive.Web.Options
         public string ApiName { get; set; }
 
         /// <summary>
-        /// This property contains a url to an identity authority.
-        /// </summary>
-        [Required]
-        public string Authority { get; set; }
-
-        /// <summary>
         /// This property contains a client secret for the API.
         /// </summary>
         [Required]

@@ -76,7 +76,7 @@ namespace CG.Olive.Stores
         #region Public methods
 
         /// <inheritdoc />
-        public virtual Task<IEnumerable<KeyValuePair<string, string>>> GetAsync(
+        public virtual Task<KeyValuePair<string, string>[]> GetAsync(
             string sid,
             string skey,
             string environment,
@@ -171,7 +171,7 @@ namespace CG.Olive.Stores
 
                 // Return the result.
                 return Task.FromResult(
-                    table.AsEnumerable()
+                    table.ToArray()
                     );
             }
             catch (Exception ex)

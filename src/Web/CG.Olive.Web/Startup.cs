@@ -75,7 +75,10 @@ namespace CG.Olive.Web
 
             // Add the CG.Olive services.
             services.AddCustomOlive(Configuration);
-            
+
+            // Add SignalR services.
+            services.AddCustomSignalR(Configuration);
+
             // Add MudBlazor services.
             services.AddMudServices();
         }

@@ -126,8 +126,8 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication("Bearer", options =>
                 {
-                    options.ApiName = identityOptions.API.ApiName;
-                    options.Authority = identityOptions.API.Authority;
+                    options.Authority = identityOptions.Authority;
+                    options.ApiName = identityOptions.API.ApiName;                    
                     options.ApiSecret = identityOptions.API.ApiSecret;
                     options.SaveToken = true;
                 });
@@ -146,7 +146,7 @@ namespace Microsoft.Extensions.DependencyInjection
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = identityOptions.OIDC.Authority;
+                options.Authority = identityOptions.Authority;
                 options.ClientId = identityOptions.OIDC.ClientId;
                 options.ClientSecret = identityOptions.OIDC.ClientSecret;
                 options.ResponseType = "code";
@@ -194,6 +194,55 @@ namespace Microsoft.Extensions.DependencyInjection
                 configuration.GetSection("CG.Olive:Repositories"),
                 ServiceLifetime.Scoped
                 );
+
+            // Return the service collection.
+            return serviceCollection;
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method adds custom SignalR services for the server.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection to use for
+        /// the operation.</param>
+        /// <param name="configuration">The configuration to use for the operation.</param>
+        /// <returns>The value of the <paramref name="serviceCollection"/> parameter,
+        /// for chaining calls together.</returns>
+        public static IServiceCollection AddCustomSignalR(
+            this IServiceCollection serviceCollection,
+            IConfiguration configuration
+            )
+        {
+            // Validate the parameters before attempting to use them.
+            Guard.Instance().ThrowIfNull(serviceCollection, nameof(serviceCollection))
+                .ThrowIfNull(configuration, nameof(configuration));
+
+            // Add a CORS policy.
+            serviceCollection.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                    builder.SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            // Add SignalR
+            serviceCollection.AddSignalR();
+            
+            // Add our SignalR hub.
+            serviceCollection.AddSingleton<SignalRHub>(x =>
+            {
+                // Create the scope.
+                //var scope = x.CreateScope();
+
+                // Create the hub.
+                var hub = new SignalRHub();
+
+                // Return the hub.
+                return hub;
+            });
 
             // Return the service collection.
             return serviceCollection;

@@ -1,4 +1,5 @@
-﻿using CG.Validations;
+﻿using CG.Olive.Web.Services;
+using CG.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -72,6 +73,9 @@ namespace Microsoft.AspNetCore.Builder
             {
                 // Map the Blazor hub.
                 endpoints.MapBlazorHub();
+
+                // Map our back-channel hub.
+                endpoints.MapHub<SignalRHub>("_backchannel");
 
                 // Map the fallback page.
                 endpoints.MapFallbackToPage("/_Host");

@@ -1,5 +1,6 @@
 ﻿using CG.Olive.Models;
 using CG.Olive.Stores;
+using CG.Olive.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
@@ -100,6 +101,12 @@ namespace CG.Olive.Web.Pages.Settings
         /// </summary>
         [Inject]
         private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+        /// <summary>
+        /// This property contains a reference to the back-channel SignalR hub.
+        /// </summary>
+        [Inject]
+        private SignalRHub SignalRHub { get; set; }
 
         #endregion
 
@@ -231,8 +238,10 @@ namespace CG.Olive.Web.Pages.Settings
                     model.UpdatedBy = _authState.User.GetEmail();
                     model.UpdatedDate = DateTime.Now;
 
-                    // Set the changes to the model.
+                    // Set any change to the comment.
                     model.Comment = temp.Comment;
+
+                    // Only change the value if it's not a parent node.
                     if (null != model.Value)
                     {
                         // Save any value change.
@@ -241,6 +250,11 @@ namespace CG.Olive.Web.Pages.Settings
 
                     // Defer to the store.
                     _ = await SettingStore.UpdateAsync(
+                        model
+                        ).ConfigureAwait(false);
+
+                    // Notify the back-channel.
+                    await SignalRHub.OnChangeAsync(
                         model
                         ).ConfigureAwait(false);
 
