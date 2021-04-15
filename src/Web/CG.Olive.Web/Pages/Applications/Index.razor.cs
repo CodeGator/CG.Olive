@@ -1,4 +1,5 @@
 ﻿using CG.Olive.Stores;
+using CG.Olive.Web.Pages.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
@@ -335,6 +336,32 @@ namespace CG.Olive.Web.Pages.Applications
 
             // Update the UI.
             await InvokeAsync(() => StateHasChanged());
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method is called whenever the user presses the properties button
+        /// for a model.
+        /// </summary>
+        private async Task OnPropertiesAsync(
+            Application model
+            )
+        {
+            // Pass in the model.
+            var parameters = new DialogParameters
+            {
+                ["Model"] = model
+            };
+
+            // Create the dialog.
+            var dialog = DialogService.Show<AuditDialog<Application>>(
+                "",
+                parameters
+                );
+
+            // Show the dialog.
+            _ = await dialog.Result.ConfigureAwait(false);
         }
 
         #endregion

@@ -40,7 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSqlServerRepositories(
             this IServiceCollection serviceCollection,
             IConfiguration configuration,
-            ServiceLifetime serviceLifetime
+            ServiceLifetime serviceLifetime = ServiceLifetime.Scoped
             )
         {
             // Validate the parameters before attempting to use them.

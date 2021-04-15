@@ -1,7 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@inject TokenProvider TokenProvider 
 
 <MudThemeProvider />
-@*<MudDialogProvider />*@
+@*<MudDialogProvider /> I get 2 of every dialog if I uncomment this *@
 <MudSnackbarProvider />
 
 <MudLayout>
@@ -16,6 +17,10 @@
                 <MudButton Variant="Variant.Text" Color="Color.Inherit">
                     @(context.User.GetEmail())
                 </MudButton>
+                <form method="post" action="/Account/Logout">
+                    <input name="__RequestVerificationToken" type="hidden" value="@TokenProvider.XsrfToken">
+                    <button type="submit" class="nav-link btn btn-link">Log out</button>
+                </form>
             </Authorized>
             <NotAuthorized>
                 <MudButton Link="/Account/Login"
@@ -55,4 +60,10 @@
         _drawerOpen = !_drawerOpen;
     }
 }
+
+<style>
+    .nav-link, .nav-link:hover {
+        color: white;
+    }
+</style>
 

@@ -1,9 +1,12 @@
-﻿<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+﻿@namespace CG.Olive.Web.Pages.Shared
+@typeparam T 
+
+<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
     <MudDialog>
         <TitleContent>
             <div class="d-flex">
                 <MudIcon Size="Size.Small" Icon="@Icons.Outlined.Settings" class="mr-3"></MudIcon>
-                <MudText>Properties</MudText>
+                <MudText>Audit Properties</MudText>
             </div>
         </TitleContent>
         <DialogContent>

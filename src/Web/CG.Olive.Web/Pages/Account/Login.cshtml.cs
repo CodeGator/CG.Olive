@@ -21,7 +21,9 @@ namespace CG.Olive.Web.Pages.Account
         /// </summary>
         /// <param name="redirectUri">The uri for a redirect.</param>
         /// <returns>A task to perform the operation.</returns>
-        public async Task OnGetAsync(string redirectUri)
+        public async Task OnGetAsync(
+            string redirectUri
+            )
         {
             if (string.IsNullOrWhiteSpace(redirectUri))
             {

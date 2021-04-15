@@ -186,7 +186,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Add the custom Olive stores.
             serviceCollection.AddOliveStores(
-                configuration.GetSection("CG.Olive")
+                configuration.GetSection("CG.Olive"),
+                ServiceLifetime.Scoped
                 );
 
             // Add the custom Olive repositories.
@@ -234,15 +235,45 @@ namespace Microsoft.Extensions.DependencyInjection
             // Add our SignalR hub.
             serviceCollection.AddSingleton<SignalRHub>(x =>
             {
-                // Create the scope.
-                //var scope = x.CreateScope();
-
                 // Create the hub.
                 var hub = new SignalRHub();
 
                 // Return the hub.
                 return hub;
             });
+
+            // Return the service collection.
+            return serviceCollection;
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method adds custom secrets handling to the server.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection to use for
+        /// the operation.</param>
+        /// <param name="configuration">The configuration to use for the operation.</param>
+        /// <returns>The value of the <paramref name="serviceCollection"/> parameter,
+        /// for chaining calls together.</returns>
+        public static IServiceCollection AddCustomSecrets(
+            this IServiceCollection serviceCollection,
+            IConfiguration configuration
+            )
+        {
+            // Validate the parameters before attempting to use them.
+            Guard.Instance().ThrowIfNull(serviceCollection, nameof(serviceCollection))
+                .ThrowIfNull(configuration, nameof(configuration));
+
+            // Add the secret stores.
+            serviceCollection.AddSecretStores(
+                configuration.GetSection("CG.Olive")
+                );
+
+            // Add the secret repositories.
+            serviceCollection.AddRepositories(
+                configuration.GetSection("CG.Olive:Secrets")
+                );
 
             // Return the service collection.
             return serviceCollection;

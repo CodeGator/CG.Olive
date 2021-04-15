@@ -1,5 +1,7 @@
-﻿using CG.Olive.Stores;
+﻿using CG.Olive.Models;
+using CG.Olive.Stores;
 using CG.Olive.Web.Models;
+using CG.Olive.Web.Pages.Shared;
 using CG.Validations;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -361,6 +363,32 @@ namespace CG.Olive.Web.Pages.Uploads
                     _info = "";
                 }
             }
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method is called whenever the user presses the properties button
+        /// for a model.
+        /// </summary>
+        private async Task OnPropertiesAsync(
+            Upload model
+            )
+        {
+            // Pass in the model.
+            var parameters = new DialogParameters
+            {
+                ["Model"] = model
+            };
+
+            // Create the dialog.
+            var dialog = DialogService.Show<AuditDialog<Upload>>(
+                "",
+                parameters
+                );
+
+            // Show the dialog.
+            _ = await dialog.Result.ConfigureAwait(false);
         }
 
         #endregion

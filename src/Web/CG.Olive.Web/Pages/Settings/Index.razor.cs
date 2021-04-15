@@ -1,5 +1,6 @@
 ﻿using CG.Olive.Models;
 using CG.Olive.Stores;
+using CG.Olive.Web.Pages.Shared;
 using CG.Olive.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -272,9 +273,11 @@ namespace CG.Olive.Web.Pages.Settings
             await InvokeAsync(() => StateHasChanged());
         }
 
+        // *******************************************************************
+
         /// <summary>
         /// This method is called whenever the user presses the properties button
-        /// for a setting.
+        /// for a model.
         /// </summary>
         private async Task OnPropertiesAsync(
             Setting model
@@ -287,7 +290,7 @@ namespace CG.Olive.Web.Pages.Settings
             };
 
             // Create the dialog.
-            var dialog = DialogService.Show<PropertiesDialog>(
+            var dialog = DialogService.Show<AuditDialog<Setting>>(
                 "",
                 parameters
                 );

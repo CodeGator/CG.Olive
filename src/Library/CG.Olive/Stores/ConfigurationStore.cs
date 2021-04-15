@@ -1,4 +1,5 @@
 ﻿using CG.Business.Stores;
+using CG.Secrets.Stores;
 using CG.Validations;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,11 @@ namespace CG.Olive.Stores
         /// </summary>
         protected ISettingStore SettingStore { get; }
 
+        /// <summary>
+        /// This property contains a reference to a secret store.
+        /// </summary>
+        protected ISecretStore SecretStore { get; }
+
         #endregion
 
         // *******************************************************************
@@ -50,21 +56,25 @@ namespace CG.Olive.Stores
         /// <param name="applicationStore">The application store to use with the store.</param>
         /// <param name="environmentStore">The environment store to use with the store.</param>
         /// <param name="settingStore">The setting store to use with the store.</param>
+        /// <param name="secretStore">The secret store to use with the store.</param>
         public ConfigurationStore(
             IApplicationStore applicationStore,
             IEnvironmentStore environmentStore,
-            ISettingStore settingStore
+            ISettingStore settingStore,
+            ISecretStore secretStore
             )
         {
             // Validate the parameters before attempting to use them.
             Guard.Instance().ThrowIfNull(applicationStore, nameof(applicationStore))
                 .ThrowIfNull(environmentStore, nameof(environmentStore))
+                .ThrowIfNull(secretStore, nameof(secretStore))
                 .ThrowIfNull(settingStore, nameof(settingStore));
 
             // Save the refernces.
             ApplicationStore = applicationStore;
             EnvironmentStore = environmentStore;
-            SettingStore = settingStore;            
+            SettingStore = settingStore;
+            SecretStore = secretStore;
         }
 
         #endregion
@@ -168,6 +178,8 @@ namespace CG.Olive.Stores
                         table[setting.Key] = setting.Value;
                     }
                 }
+
+                //var foo = SecretStore.GetByNameAsync("Test1").Result;
 
                 // Return the result.
                 return Task.FromResult(

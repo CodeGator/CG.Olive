@@ -38,8 +38,8 @@
         <MudCardHeader>
             <CardHeaderContent>
                 <MudGrid Justify="Justify.Center">
-                    <MudItem xs="2" md="2"></MudItem>
-                    <MudItem xs="8" md="8">
+                    <MudItem xs="2" md="2" lg="2"></MudItem>
+                    <MudItem xs="8" md="8" lg="8">
                         @if (!_query.Any())
                         {
                             <div class="d-flex">
@@ -54,9 +54,9 @@
                             </div>
                         }
                     </MudItem>
-                    <MudItem xs="2" md="2"></MudItem>
-                    <MudItem xs="2" md="2"></MudItem>
-                    <MudItem xs="4" md="4">
+                    <MudItem xs="2" md="2" lg="2"></MudItem>
+                    <MudItem xs="2" md="2" lg="2"></MudItem>
+                    <MudItem xs="4" md="4" lg="4">
                         <MudSelect T="CG.Olive.Models.Application"
                                    Label="Application"
                                    SelectedValuesChanged="OnApplicationChanged">
@@ -68,7 +68,7 @@
                             }
                         </MudSelect>
                     </MudItem>
-                    <MudItem xs="4" md="4">
+                    <MudItem xs="4" md="4" lg="4">
                         <MudSelect T="CG.Olive.Models.Environment"
                                    Label="Environment"
                                    SelectedValuesChanged="OnEnvironmentChanged">
@@ -78,14 +78,14 @@
                             }
                         </MudSelect>
                     </MudItem>
-                    <MudItem xs="2" md="2"></MudItem>
+                    <MudItem xs="2" md="2" lg="2"></MudItem>
                 </MudGrid>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
             <MudGrid Justify="Justify.Center">
-                <MudItem xs="2" md="2"></MudItem>
-                <MudItem xs="8" md="8">
+                <MudItem xs="0" md="1" lg="2"></MudItem>
+                <MudItem xs="12" md="10" lg="8">
                     @if (_query.Any())
                     {
                         <MudTable T="CG.Olive.Models.Setting" 
@@ -96,7 +96,7 @@
                                 <col />
                                 <col />
                                 <col />
-                                <col style="width: 125px;" />
+                                <col style="width: 250px;" />
                             </ColGroup>
                             <HeaderContent>
                                 <MudTh>
@@ -157,7 +157,7 @@
                         </MudText>
                     }
                 </MudItem>            
-                <MudItem xs="2" md="2"></MudItem>
+                <MudItem xs="0" md="1" lg="2"></MudItem>
             </MudGrid>
         </MudCardContent>
     </MudCard>

@@ -1,8 +1,12 @@
+using CG.Olive.Web.Options;
+using CG.Validations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 #pragma warning disable CS1998
@@ -14,6 +18,43 @@ namespace CG.Olive.Web.Pages.Account
     /// </summary>
     public class LogoutModel : PageModel
     {
+        // *******************************************************************
+        // Fields.
+        // *******************************************************************
+
+        #region Fields
+
+        /// <summary>
+        /// This field contains a reference to the identity options.
+        /// </summary>
+        private IdentityOptions _identityOptions;
+
+        #endregion
+
+        // *******************************************************************
+        // Constructors.
+        // *******************************************************************
+
+        #region Constructors
+
+        /// <summary>
+        /// This constructor creates a new instance of the <see cref="LogoutModel"/>
+        /// class.
+        /// </summary>
+        /// <param name="identityOptions">The identity options to use for the page.</param>
+        public LogoutModel(
+            IOptions<IdentityOptions> identityOptions
+            )
+        {
+            // Validate the parameters before attempting to use them.
+            Guard.Instance().ThrowIfNull(identityOptions, nameof(identityOptions));
+
+            // Save the references.
+            _identityOptions = identityOptions.Value;
+        }
+
+        #endregion
+
         // *******************************************************************
         // Public methods.
         // *******************************************************************
@@ -30,7 +71,7 @@ namespace CG.Olive.Web.Pages.Account
             return SignOut(
                 new AuthenticationProperties
                 {
-                    RedirectUri = "https://localhost:5001"
+                    RedirectUri = _identityOptions.Authority
                 },
                 OpenIdConnectDefaults.AuthenticationScheme,
                 CookieAuthenticationDefaults.AuthenticationScheme
