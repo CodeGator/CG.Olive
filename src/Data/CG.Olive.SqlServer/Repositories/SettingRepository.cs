@@ -6,7 +6,6 @@ using CG.Olive.SqlServer.Options;
 using CG.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,9 +96,11 @@ namespace CG.Olive.SqlServer.Repositories
                 // Create a context.
                 var context = Factory.Create();
 
-                // Prevent EFCore from doing anything goofy.
+                // Prevent EFCore from doing anything goofy with any of
+                //   the associated objects.
                 model.Application = null;
                 model.Environment = null;
+                model.Upload = null;
 
                 // Add to the data-context.
                 var entity = await context.Settings.AddAsync(
@@ -166,6 +167,9 @@ namespace CG.Olive.SqlServer.Repositories
                 originalModel.Key = model.Key;
                 originalModel.Value = model.Value;
                 originalModel.Comment = model.Comment;
+                originalModel.IsSecret = model.IsSecret;
+                originalModel.MobileEditable = model.MobileEditable;
+                originalModel.MobileVisible = model.MobileVisible;
 
                 // Save the changes.
                 await context.SaveChangesAsync(

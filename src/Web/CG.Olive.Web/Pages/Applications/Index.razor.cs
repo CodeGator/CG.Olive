@@ -123,7 +123,12 @@ namespace CG.Olive.Web.Pages.Applications
                 _info = "";
 
                 // Create a model.
-                var model = new Application();
+                var model = new Application()
+                {
+                    // Make the form validations happy.
+                    CreatedBy = _authState.User.GetEmail(),
+                    CreatedDate = DateTime.Now
+                };
 
                 // Pass the model to the dialog.
                 var parameters = new DialogParameters 
@@ -144,10 +149,6 @@ namespace CG.Olive.Web.Pages.Applications
                 // Did the user hit save?
                 if (!result.Cancelled)
                 {
-                    // Setup the properties.
-                    model.CreatedBy = _authState.User.GetEmail();
-                    model.CreatedDate = DateTime.Now;
-
                     // Defer to the store.
                     _ = await ApplicationStore.AddAsync(
                         model
@@ -187,6 +188,10 @@ namespace CG.Olive.Web.Pages.Applications
                 // Clone the model.
                 var temp = model.QuickClone();
 
+                // Make the form validations happy.
+                temp.UpdatedBy = _authState.User.GetEmail();
+                temp.UpdatedDate = DateTime.Now;
+
                 // Pass the clone to the dialog, so we won't have changed anything
                 //   if the user eventually presses cancel.
                 var parameters = new DialogParameters
@@ -207,10 +212,6 @@ namespace CG.Olive.Web.Pages.Applications
                 // Did the user hit save?
                 if (!result.Cancelled)
                 {
-                    // Setup the properties.
-                    model.UpdatedBy = _authState.User.GetEmail();
-                    model.UpdatedDate = DateTime.Now;
-
                     // Set the changes to the model.
                     model.Name = temp.Name;
                     model.IsLocked = temp.IsLocked;

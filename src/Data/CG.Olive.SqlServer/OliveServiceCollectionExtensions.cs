@@ -4,23 +4,21 @@ using CG.Olive.SqlServer;
 using CG.Olive.SqlServer.Options;
 using CG.Olive.SqlServer.Repositories;
 using CG.Validations;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// This class contains extension methods related to the <see cref="IServiceCollection"/>
-    /// type.
+    /// type, for the olive sql server library.
     /// </summary>
     /// <remarks>
     /// This class contains only those extension methods that are related to the logic
     /// within the <see cref="CG.Olive.SqlServer"/> library itself. 
     /// </remarks>
-    public static partial class ServiceCollectionExtensions
+    public static partial class OliveServiceCollectionExtensions
     {
         // *******************************************************************
         // Public methods.
@@ -49,7 +47,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Register the EFCORE options.
             serviceCollection.ConfigureOptions<OliveRepositoryOptions>(
-                configuration
+                configuration,
+                out var repositoryOptions
                 );
 
             // Register the data-context.

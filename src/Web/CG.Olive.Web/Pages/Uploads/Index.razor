@@ -12,7 +12,7 @@
 <InfoBlock Dismissable Content="@_info" />
 
 <HelpBlock Visible="@(!ApplicationStore.AsQueryable().Any() || !EnvironmentStore.AsQueryable().Any())"
-           Content="SUploads require an application and an environment, but, that data hasn't been created yet.">
+           Content="Uploads require an application and an environment, but, that data hasn't been created yet.">
     <ChildContent>
         <MudText Class="px-5 pb-1" 
                  Color="Color.Info" 
@@ -179,6 +179,7 @@
                                                     <MudTd DataLabel="Application">
                                                         <MudSelect T="CG.Olive.Models.Application" 
                                                                     Required
+                                                                    HelperText="Select the application for this upload"
                                                                     SelectedValuesChanged="@(e => OnApplicationChanged(context.File, e))">
                                                             @foreach (var item in ApplicationStore.AsQueryable())
                                                             {
@@ -189,6 +190,7 @@
                                                     <MudTd DataLabel="Environment">
                                                             <MudSelect T="CG.Olive.Models.Environment" 
                                                                     Required
+                                                                    HelperText="Select the environment for this upload"
                                                                     SelectedValuesChanged="@(e => OnEnvironmentChanged(context.File, e))">
                                                             @foreach (var item in EnvironmentStore.AsQueryable())
                                                             {

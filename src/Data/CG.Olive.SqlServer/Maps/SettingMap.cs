@@ -42,6 +42,10 @@ namespace CG.Olive.SqlServer.Maps
             builder.Property(e => e.Comment)
                 .HasMaxLength(255);
 
+            builder.Property(e => e.IsSecret).HasDefaultValue(0);
+            builder.Property(e => e.MobileVisible).HasDefaultValue(0);
+            builder.Property(e => e.MobileEditable).HasDefaultValue(0);
+
             builder.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
                 .IsRequired();

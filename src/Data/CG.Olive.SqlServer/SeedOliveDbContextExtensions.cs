@@ -12,7 +12,7 @@ namespace CG.Olive.SqlServer
     /// This class contains <see cref="OliveDbContext"/> related operations that should
     /// only be called from within the <see cref="CG.Olive.SqlServer"/> library.
     /// </remarks>
-    internal static partial class OliveDbContextExtensions
+    internal static partial class SeedOliveDbContextExtensions
     {
         // *******************************************************************
         // Public methods.
@@ -252,6 +252,8 @@ namespace CG.Olive.SqlServer
                 Value = null,
                 ApplicationId = context.Applications.First(x => x.Name == "CG.Obsidian.Web").Id,
                 EnvironmentId = context.Environments.First(x => x.Name == "Production").Id,
+                Comment = "test comment",
+                IsSecret = false,
                 CreatedBy = "seed",
                 CreatedDate = DateTime.Now
             });

@@ -40,7 +40,7 @@
                 <MudGrid Justify="Justify.Center">
                     <MudItem xs="2" md="2" lg="2"></MudItem>
                     <MudItem xs="8" md="8" lg="8">
-                        @if (!_query.Any())
+                        @if (_selectedApplicationId == 0 && _selectedEnvironmentId == 0)
                         {
                             <div class="d-flex">
                                 <MudIcon Icon="@Icons.Outlined.Help" 
@@ -59,6 +59,7 @@
                     <MudItem xs="4" md="4" lg="4">
                         <MudSelect T="CG.Olive.Models.Application"
                                    Label="Application"
+                                   HelperText="@(_selectedApplicationId  == 0 ? "Select an application to show settings" : "")"
                                    SelectedValuesChanged="OnApplicationChanged">
                             @foreach (var item in ApplicationStore.AsQueryable())
                             {
@@ -71,6 +72,7 @@
                     <MudItem xs="4" md="4" lg="4">
                         <MudSelect T="CG.Olive.Models.Environment"
                                    Label="Environment"
+                                   HelperText="@(_selectedEnvironmentId  == 0 ? "Select an environment to show settings" : "")"
                                    SelectedValuesChanged="OnEnvironmentChanged">
                             @foreach (var item in EnvironmentStore.AsQueryable())
                             {
@@ -88,11 +90,12 @@
                 <MudItem xs="12" md="10" lg="8">
                     @if (_query.Any())
                     {
-                        <MudTable T="CG.Olive.Models.Setting" 
-                                    Items="_query" 
-                                    Elevation="0" 
-                                    Dense="true">
+                        <MudTable T="CG.Olive.Models.Setting"
+                                  Items="_query"
+                                  Elevation="0"
+                                  Dense="true">
                             <ColGroup>
+                                <col />
                                 <col />
                                 <col />
                                 <col />
@@ -100,14 +103,19 @@
                             </ColGroup>
                             <HeaderContent>
                                 <MudTh>
-                                    <MudTableSortLabel InitialDirection="SortDirection.Ascending" 
-                                                        SortBy="new Func<Setting, object>(x=>x.Key)">
+                                    <MudTableSortLabel InitialDirection="SortDirection.Ascending"
+                                                       SortBy="new Func<Setting, object>(x=>x.Key)">
                                         Key
                                     </MudTableSortLabel>
                                 </MudTh>
                                 <MudTh>
                                     <MudTableSortLabel SortBy="new Func<Setting, object>(x=>x.Value)">
                                         Value
+                                    </MudTableSortLabel>
+                                </MudTh>
+                                <MudTh>
+                                    <MudTableSortLabel SortBy="new Func<Setting, object>(x=>x.IsSecret)">
+                                        Is Secret
                                     </MudTableSortLabel>
                                 </MudTh>
                                 <MudTh>
@@ -122,22 +130,28 @@
                                     @context.Key
                                 </MudTd>
                                 <MudTd Style="@(null == context.Value ? "color: grey;" : "")"
-                                        DataLabel="Key">
+                                       DataLabel="Key">
                                     @(null == context.Value ? "N/A" : context.Value)
+                                </MudTd>
+                                <MudTd DataLabel="IsSecret">
+                                    <MudSwitch @bind-Checked="@context.IsSecret" 
+                                               ReadOnly="true"
+                                               Label="@(context.IsSecret ? "On" : "Off")"
+                                               Color="@(context.IsSecret ? Color.Info : Color.Inherit)"/>
                                 </MudTd>
                                 <MudTd DataLabel="Comment">
                                     @context.Comment
-                                    </MudTd>
+                                </MudTd>
                                 <MudTd>
                                     <MudTooltip Text="Edit">
                                         <MudIconButton Icon="@Icons.Outlined.Edit"
-                                                        Size="Size.Small"
-                                                        OnClick=@(() => OnEditSettingAsync(context)) />
+                                                       Size="Size.Small"
+                                                       OnClick=@(() => OnEditSettingAsync(context)) />
                                     </MudTooltip>
                                     <MudTooltip Text="Properties">
                                         <MudIconButton Icon="@Icons.Outlined.Settings"
-                                                    Size="Size.Small"
-                                                    OnClick=@(() => OnPropertiesAsync(context)) />
+                                                       Size="Size.Small"
+                                                       OnClick=@(() => OnPropertiesAsync(context)) />
                                     </MudTooltip>
                                 </MudTd>
                             </RowTemplate>
@@ -148,15 +162,18 @@
                     }
                     else
                     {
-                        <MudText Class="pt-5" 
-                                 Typo="Typo.h6">
-                            No settings
-                        </MudText>
-                        <MudText Typo="Typo.body2">
-                            Select an application or environment above, or upload a file.
-                        </MudText>
+                        if (_selectedApplicationId != 0 && _selectedEnvironmentId != 0)
+                        {
+                            <MudText Class="pt-5"
+                                     Typo="Typo.h6">
+                                No matching settings
+                            </MudText>
+                            <MudText Typo="Typo.body2">
+                                Upload one or more files for this application/environment.
+                            </MudText>
+                        }
                     }
-                </MudItem>            
+                </MudItem>
                 <MudItem xs="0" md="1" lg="2"></MudItem>
             </MudGrid>
         </MudCardContent>

@@ -1,6 +1,7 @@
 ﻿using CG.Business.Stores;
 using CG.Secrets.Stores;
 using CG.Validations;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace CG.Olive.Stores
         #region Properties
 
         /// <summary>
+        /// This property contains a reference to a logger.
+        /// </summary>
+        protected ILogger<ConfigurationStore> Logger { get; }
+
+        /// <summary>
         /// This property contains a reference to an application store.
         /// </summary>
         protected IApplicationStore ApplicationStore { get; }
@@ -39,7 +45,7 @@ namespace CG.Olive.Stores
         /// <summary>
         /// This property contains a reference to a secret store.
         /// </summary>
-        protected ISecretStore SecretStore { get; }
+        protected ISecretStore SecretStore { get; }        
 
         #endregion
 
@@ -53,11 +59,13 @@ namespace CG.Olive.Stores
         /// This constructor creates a new instance of the <see cref="ConfigurationStore"/>
         /// class.
         /// </summary>
+        /// <param name="logger">The logger to use for the store.</param>
         /// <param name="applicationStore">The application store to use with the store.</param>
         /// <param name="environmentStore">The environment store to use with the store.</param>
         /// <param name="settingStore">The setting store to use with the store.</param>
         /// <param name="secretStore">The secret store to use with the store.</param>
         public ConfigurationStore(
+            ILogger<ConfigurationStore> logger,
             IApplicationStore applicationStore,
             IEnvironmentStore environmentStore,
             ISettingStore settingStore,
@@ -65,12 +73,14 @@ namespace CG.Olive.Stores
             )
         {
             // Validate the parameters before attempting to use them.
-            Guard.Instance().ThrowIfNull(applicationStore, nameof(applicationStore))
+            Guard.Instance().ThrowIfNull(logger, nameof(logger))
+                .ThrowIfNull(applicationStore, nameof(applicationStore))
                 .ThrowIfNull(environmentStore, nameof(environmentStore))
                 .ThrowIfNull(secretStore, nameof(secretStore))
                 .ThrowIfNull(settingStore, nameof(settingStore));
 
             // Save the refernces.
+            Logger = logger;
             ApplicationStore = applicationStore;
             EnvironmentStore = environmentStore;
             SettingStore = settingStore;
@@ -86,7 +96,7 @@ namespace CG.Olive.Stores
         #region Public methods
 
         /// <inheritdoc />
-        public virtual Task<KeyValuePair<string, string>[]> GetAsync(
+        public virtual async Task<KeyValuePair<string, string>[]> GetAsync(
             string sid,
             string skey,
             string environment,
@@ -98,6 +108,10 @@ namespace CG.Olive.Stores
                 // Validate the parameters before attempting to use them.
                 Guard.Instance().ThrowIfNull(sid, nameof(sid))
                     .ThrowIfNull(skey, nameof(skey));
+
+                // First we find any settings for the 'default' environment, then
+                //   we merge those with any settings for whatever environment was
+                //   specified by the caller.
 
                 // Look for a matching application.
                 var appModel = ApplicationStore.AsQueryable().FirstOrDefault(
@@ -142,11 +156,62 @@ namespace CG.Olive.Stores
                 // Loop and process settings.
                 foreach (var setting in settings)
                 {
-                    // Add the setting to the table.
-                    table[setting.Key] = setting.Value;
+                    // Is the setting a secret?
+                    if (setting.IsSecret)
+                    {
+                        // Is the value, which is the secret key, missing?
+                        if (string.IsNullOrEmpty(setting.Value))
+                        {
+                            // Let someone know what happened.
+                            Logger.LogWarning(
+                                $"The settting '{setting.Key}', in environment: '{defaultEnvModel.Name}', " +
+                                $"for sid: '{sid}', is marked as a secret, but, there is no value in the setting! " +
+                                $"reverting to value: '{setting.Value}'"
+                                );
+
+                            // Fallback to using the setting's value.
+                            table[setting.Key] = setting.Value;
+                        }
+                        else
+                        {
+                            // If we get here, we need to fetch the actual secret from the remote
+                            //   secret store, and put that value into the key-value-pair.
+
+                            try
+                            {
+                                // Try to fetch the specified secret.
+                                var secret = await SecretStore.GetByNameAsync(
+                                    setting.Value,
+                                    cancellationToken
+                                    ).ConfigureAwait(false);
+
+                                // Use the secret value.
+                                table[setting.Key] = secret.Value;
+                            }
+                            catch (Exception ex)
+                            {
+                                // Let someone know what happened.
+                                Logger.LogWarning(
+                                    $"Failed to find a secret for setting: '{setting.Key}', " +
+                                    $"in environment: '{defaultEnvModel.Name}', " +
+                                    $"for sid: '{sid}', " +
+                                    $"reverting to value: '{setting.Value}'",
+                                    ex
+                                    );
+
+                                // Fallback to using the setting's value.
+                                table[setting.Key] = setting.Value;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Use the setting's value.
+                        table[setting.Key] = setting.Value;
+                    }
                 }
 
-                // Was an environment specified?
+                // Was an environment specified by the caller?
                 if (false == string.IsNullOrEmpty(environment))
                 {
                     // Look for the specified environment.
@@ -165,6 +230,17 @@ namespace CG.Olive.Stores
                              .SetDateTime();
                     }
 
+                    // Is this the 'default' environment?
+                    if (true == envModel.IsDefault)
+                    {
+                        // We're done.
+                        return table.ToArray(); 
+                    }
+
+                    // If we get here then we've already loaded the 'default' environment's
+                    //   settings, and now, we're about to merge those values with whatever
+                    //   is in whatever environment was specified by the caller.
+
                     // Look for matching settings.
                     settings = SettingStore.AsQueryable().Where(x =>
                         x.ApplicationId == appModel.Id &&
@@ -174,17 +250,68 @@ namespace CG.Olive.Stores
                     // Loop and process settings.
                     foreach (var setting in settings)
                     {
-                        // Add the setting to the table.
-                        table[setting.Key] = setting.Value;
+                        // Is the setting a secret?
+                        if (setting.IsSecret)
+                        {
+                            // Is the value, which is the secret key, missing?
+                            if (string.IsNullOrEmpty(setting.Value))
+                            {
+                                // Let someone know what happened.
+                                Logger.LogWarning(
+                                    $"The settting '{setting.Key}', in environment: '{environment}', " +
+                                    $"for sid: '{sid}', is marked as a secret, but, there is no value in the setting! " +
+                                    $"reverting to value: '{setting.Value}'"
+                                    );
+
+                                // Fallback to using the setting's value.
+                                table[setting.Key] = setting.Value;
+                            }
+                            else
+                            {
+                                // If we get here, we need to fetch the actual secret from the remote
+                                //   secret store, and put that value into the key-value-pair.
+
+                                try
+                                {
+                                    // Try to fetch the specified secret.
+                                    var secret = await SecretStore.GetByNameAsync(
+                                        setting.Value,
+                                        cancellationToken
+                                        ).ConfigureAwait(false);
+
+                                    // Use the secret value.
+                                    table[setting.Key] = secret.Value;
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Let the world know what happened.
+                                    Logger.LogWarning(
+                                        $"Failed to find a secret for setting: '{setting.Key}', " +
+                                        $"in environment: '{environment}', " +
+                                        $"for sid: '{sid}', " +
+                                        $"reverting to value: '{setting.Value}'",
+                                        ex
+                                        );
+
+                                    // Fallback to using the setting's value.
+                                    table[setting.Key] = setting.Value;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Use the setting's value.
+                            table[setting.Key] = setting.Value;
+                        }
                     }
                 }
 
-                //var foo = SecretStore.GetByNameAsync("Test1").Result;
+                // If we get here then we've built a collection of key-value-pair objects
+                //   using the settings in our store. Nothing left to do but return that
+                //   data to the caller.
 
                 // Return the result.
-                return Task.FromResult(
-                    table.ToArray()
-                    );
+                return table.ToArray();
             }
             catch (Exception ex)
             {

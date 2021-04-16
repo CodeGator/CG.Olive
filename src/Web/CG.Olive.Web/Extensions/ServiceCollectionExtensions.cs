@@ -127,7 +127,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddIdentityServerAuthentication("Bearer", options =>
                 {
                     options.Authority = identityOptions.Authority;
-                    options.ApiName = identityOptions.API.ApiName;                    
+                    options.ApiName = identityOptions.API.ApiName;
                     options.ApiSecret = identityOptions.API.ApiSecret;
                     options.SaveToken = true;
                 });

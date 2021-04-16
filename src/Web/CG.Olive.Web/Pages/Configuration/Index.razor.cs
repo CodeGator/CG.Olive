@@ -24,6 +24,11 @@ namespace CG.Olive.Web.Pages.Configuration
         #region Fields
 
         /// <summary>
+        /// This field indicates whether the page is busy, or not.
+        /// </summary>
+        public bool _isBusy;
+
+        /// <summary>
         /// This field contains a summary error message.
         /// </summary>
         private string _error;
@@ -132,24 +137,41 @@ namespace CG.Olive.Web.Pages.Configuration
         /// <returns>A task to perform the operation.</returns>
         private async Task QueryForDataAsync()
         {
-            // Are the application and environment selected?
-            if (null != _selectedEnvironment && null != _selectedApplication)
-            {
-                // Defer to the store.
-                _data = await ConfigurationStore.GetAsync(
-                    _selectedApplication.Sid,
-                    _selectedApplication.SKey,
-                    _selectedEnvironment.Name
-                    ).ConfigureAwait(false);
-            }
-            else
-            {
-                // No data is possible.
-                _data = new KeyValuePair<string, string>[0].AsEnumerable();
-            }
+            // Tell Blazor we are busy.
+            _isBusy = true;
 
-            // Tell Blazor we changed stuff.
-            StateHasChanged();
+            try
+            {
+                // Clear the UI.
+                _info = string.Empty;
+                _error = string.Empty;
+
+                // Are the application and environment selected?
+                if (null != _selectedEnvironment && null != _selectedApplication)
+                {
+                    // Defer to the store.
+                    _data = await ConfigurationStore.GetAsync(
+                        _selectedApplication.Sid,
+                        _selectedApplication.SKey,
+                        _selectedEnvironment.Name
+                        ).ConfigureAwait(false);
+                }
+                else
+                {
+                    // No data is possible.
+                    _data = new KeyValuePair<string, string>[0].AsEnumerable();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Show the error.
+                _error = ex.Message;
+            }
+            finally
+            {
+                // Tell Blazor we are no longer busy.
+                _isBusy = false;
+            }
         }
 
         #endregion

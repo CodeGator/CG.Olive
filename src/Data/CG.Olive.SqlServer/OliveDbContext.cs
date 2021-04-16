@@ -20,25 +20,25 @@ namespace CG.Olive.SqlServer
         #region Properties
 
         /// <summary>
-        /// This property contains a set a <see cref="CG.Olive.Models.Application"/>
+        /// This property contains a set of <see cref="CG.Olive.Models.Application"/>
         /// objects.
         /// </summary>
         public virtual DbSet<CG.Olive.Models.Application> Applications { get; set; }
 
         /// <summary>
-        /// This property contains a set a <see cref="CG.Olive.Models.Environment"/>
+        /// This property contains a set of <see cref="CG.Olive.Models.Environment"/>
         /// objects.
         /// </summary>
         public virtual DbSet<CG.Olive.Models.Environment> Environments { get; set; }
 
         /// <summary>
-        /// This property contains a set a <see cref="CG.Olive.Models.Upload"/>
+        /// This property contains a set of <see cref="CG.Olive.Models.Upload"/>
         /// objects.
         /// </summary>
         public virtual DbSet<CG.Olive.Models.Upload> Uploads { get; set; }
 
         /// <summary>
-        /// This property contains a set a <see cref="CG.Olive.Models.Setting"/>
+        /// This property contains a set of <see cref="CG.Olive.Models.Setting"/>
         /// objects.
         /// </summary>
         public virtual DbSet<CG.Olive.Models.Setting> Settings { get; set; }

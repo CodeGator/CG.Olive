@@ -24,6 +24,7 @@ namespace CG.Olive.Models
         /// <summary>
         /// This property contains the date when the model was created.
         /// </summary>
+        [Required]
         public DateTime CreatedDate { get; set; }
 
         /// <summary>

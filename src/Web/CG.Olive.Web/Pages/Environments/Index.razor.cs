@@ -125,9 +125,19 @@ namespace CG.Olive.Web.Pages.Environments
                 // Create a model.
                 var model = new Environment()
                 {
-                    // First environment is automatically default, until it isn't.
-                    IsDefault = !EnvironmentStore.AsQueryable().Any()
+                    // First environment is automatically the default.
+                    IsDefault = !EnvironmentStore.AsQueryable().Any(),
+
+                    // Make the form validations happy.
+                    CreatedBy = _authState.User.GetEmail(),
+                    CreatedDate = DateTime.Now
                 };
+
+                // First environment is automatically called "Production"
+                if (model.IsDefault)
+                {
+                    model.Name = "Production";
+                }
 
                 // Pass the model to the dialog.
                 var parameters = new DialogParameters
@@ -148,10 +158,6 @@ namespace CG.Olive.Web.Pages.Environments
                 // Did the user hit save?
                 if (!result.Cancelled)
                 {
-                    // Setup the properties.
-                    model.CreatedBy = _authState.User.GetEmail();
-                    model.CreatedDate = DateTime.Now;
-
                     // Defer to the store.
                     _ = await EnvironmentStore.AddAsync(
                         model
@@ -193,6 +199,10 @@ namespace CG.Olive.Web.Pages.Environments
                 // Clone the model.
                 var temp = model.QuickClone();
 
+                // Make the form validations happy.
+                temp.UpdatedBy = _authState.User.GetEmail();
+                temp.UpdatedDate = DateTime.Now;
+
                 // Pass the clone to the dialog, so we won't have changed anything
                 //   if the user eventually presses cancel.
                 var parameters = new DialogParameters
@@ -213,10 +223,6 @@ namespace CG.Olive.Web.Pages.Environments
                 // Did the user hit save?
                 if (!result.Cancelled)
                 {
-                    // Setup the properties.
-                    model.UpdatedBy = _authState.User.GetEmail();
-                    model.UpdatedDate = DateTime.Now;
-
                     // Set the changes to the model.
                     model.Name = temp.Name;
 

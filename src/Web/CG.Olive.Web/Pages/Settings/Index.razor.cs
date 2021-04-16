@@ -216,6 +216,10 @@ namespace CG.Olive.Web.Pages.Settings
                 // Clone the model.
                 var temp = model.QuickClone();
 
+                // Make the form validations happy.
+                temp.UpdatedBy = _authState.User.GetEmail();
+                temp.UpdatedDate = DateTime.Now;
+
                 // Pass the clone to the dialog, so we won't have changed anything
                 //   if the user eventually presses cancel.
                 var parameters = new DialogParameters
@@ -235,12 +239,9 @@ namespace CG.Olive.Web.Pages.Settings
                 // Did the user hit save?
                 if (!result.Cancelled)
                 {
-                    // Setup the properties.
-                    model.UpdatedBy = _authState.User.GetEmail();
-                    model.UpdatedDate = DateTime.Now;
-
                     // Set any change to the comment.
                     model.Comment = temp.Comment;
+                    model.IsSecret = temp.IsSecret;
 
                     // Only change the value if it's not a parent node.
                     if (null != model.Value)

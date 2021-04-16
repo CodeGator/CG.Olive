@@ -2,6 +2,7 @@
 using CG.Olive.Models;
 using CG.Olive.Repositories;
 using CG.Validations;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,11 @@ namespace CG.Olive.Stores
         #region Properties
 
         /// <summary>
+        /// This property contains a reference to a logger.
+        /// </summary>
+        protected ILogger<UploadStore> Logger { get; }
+
+        /// <summary>
         /// This property contains a reference to an upload repository.
         /// </summary>
         protected IUploadRepository UploadRepository { get; }
@@ -43,16 +49,20 @@ namespace CG.Olive.Stores
         /// This constructor creates a new instance of the <see cref="UploadStore"/>
         /// class.
         /// </summary>
+        /// <param name="logger">The logger to use for the store.</param>
         /// <param name="uploadRepository">The upload repository to use
         /// with the store.</param>
         public UploadStore(
+            ILogger<UploadStore> logger,
             IUploadRepository uploadRepository
             )
         {
             // Validate the parameters before attempting to use them.
-            Guard.Instance().ThrowIfNull(uploadRepository, nameof(uploadRepository));
+            Guard.Instance().ThrowIfNull(logger, nameof(logger))
+                .ThrowIfNull(uploadRepository, nameof(uploadRepository));
 
             // Save the references.
+            Logger = logger;
             UploadRepository = uploadRepository;
         }
 

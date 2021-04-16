@@ -2,6 +2,7 @@
 using CG.Olive.Models;
 using CG.Olive.Repositories;
 using CG.Validations;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace CG.Olive.Stores
         #region Properties
 
         /// <summary>
+        /// This property contains a reference to a logger.
+        /// </summary>
+        protected ILogger<EnvironmentStore> Logger { get; }
+
+        /// <summary>
         /// This property contains a reference to an environment repository.
         /// </summary>
         protected IEnvironmentRepository EnvironmentRepository { get; }
@@ -41,16 +47,20 @@ namespace CG.Olive.Stores
         /// This constructor creates a new instance of the <see cref="EnvironmentStore"/>
         /// class.
         /// </summary>
+        /// <param name="logger">The logger to use for the store.</param>
         /// <param name="environmentRepository">The environment repository to use
         /// with the store.</param>
         public EnvironmentStore(
+            ILogger<EnvironmentStore> logger,
             IEnvironmentRepository environmentRepository
             )
         {
             // Validate the parameters before attempting to use them.
-            Guard.Instance().ThrowIfNull(environmentRepository, nameof(environmentRepository));
+            Guard.Instance().ThrowIfNull(logger, nameof(logger))
+                .ThrowIfNull(environmentRepository, nameof(environmentRepository));
 
             // Save the references.
+            Logger = logger;
             EnvironmentRepository = environmentRepository;
         }
 
