@@ -57,5 +57,16 @@ namespace CG.Olive.Repositories
             CG.Olive.Models.Setting model,
             CancellationToken cancellationToken = default
             );
+
+        /// <summary>
+        /// This method removes all the settings for the specified upload.
+        /// </summary>
+        /// <param name="uploadId">The upload identifier to use for the operation.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A task to perform the operation.</returns>
+        Task RollbackUploadAsync(
+            int uploadId,
+            CancellationToken cancellationToken = default
+            );
     }
 }

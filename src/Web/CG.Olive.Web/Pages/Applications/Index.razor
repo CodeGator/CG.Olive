@@ -38,7 +38,6 @@
     <MudCard Elevation="0">
         <MudCardContent>
             <MudGrid Justify="Justify.Center">
-                <MudItem xs="0" md="1" lg="2"></MudItem>
                 <MudItem xs="12" md="10" lg="8">
                     <MudTable Items="@ApplicationStore.AsQueryable()"
                               Elevation="0"
@@ -49,14 +48,14 @@
                                        Size="Size.Small"
                                        OnClick="OnAddApplicationAsync">
                                     Add
-                                </MudButton>                
+                                </MudButton>
                         </ToolBarContent>
                         <ColGroup>
-                            <col />
-                            <col />
-                            <col />
-                            <col />
-                            <col style="min-width: 250px;" />
+                            <col style="width: 1px;" />
+                            <col  />
+                            <col  />
+                            <col  />
+                            <col style="width: 120px;" />
                         </ColGroup>
                         <HeaderContent>
                             <MudTh>
@@ -84,41 +83,43 @@
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Locked"
-                                   Class="@(context.IsLocked ? "locked" : "")" >
-                                <MudCheckBox @bind-Checked="@context.IsLocked" 
-                                             @onclick="@(() => OnLockChangeAsync(context))">
-                                </MudCheckBox>
+                                   Class="@(context.IsLocked ? "locked" : "")">
+                                <MudSwitch @bind-Checked="@context.IsLocked"
+                                            @onclick="@(() => OnLockChangeAsync(context))"
+                                            Label="@(context.IsLocked ? "On" : "Off")"
+                                            Color="@(context.IsLocked ? Color.Info : Color.Inherit)">
+                                </MudSwitch>
                             </MudTd>
                             <MudTd DataLabel="Name"
                                    Class="@(context.IsLocked ? "locked" : "")">@context.Name</MudTd>
-                            <MudTd DataLabel="Sid"
-                                   Class="@(context.IsLocked ? "locked" : "")">@context.Sid</MudTd>
-                            <MudTd DataLabel="SKey"
-                                   Class="@(context.IsLocked ? "locked" : "")">@context.SKey</MudTd>
-                            <MudTd>
-                                <MudTooltip Text="Edit">
-                                    <MudIconButton Icon="@Icons.Outlined.Edit"
-                                                   Size="Size.Small"
-                                                   OnClick="@(() => OnEditApplicationAsync(context))" />
-                                </MudTooltip>
-                                <MudTooltip Text="Delete">
-                                    <MudIconButton Icon="@Icons.Outlined.Delete"
-                                                   Size="Size.Small"
-                                                   OnClick="@(() => OnDeleteApplicationAsync(context))" />
-                                </MudTooltip>
-                                <MudTooltip Text="Properties">
-                                    <MudIconButton Icon="@Icons.Outlined.Settings"
-                                                   Size="Size.Small"
-                                                   OnClick=@(() => OnPropertiesAsync(context)) />
-                                </MudTooltip>
-                            </MudTd>
-                        </RowTemplate>
+                                <MudTd DataLabel="Sid"
+                                       Class="@(context.IsLocked ? "locked" : "")">@context.Sid</MudTd>
+                                    <MudTd DataLabel="SKey"
+                                           Class="@(context.IsLocked ? "locked" : "")">@context.SKey</MudTd>
+                                        <MudTd>
+                                            <MudTooltip Text="Edit">
+                                                <MudIconButton Icon="@Icons.Outlined.Edit"
+                                                               Size="Size.Small"
+                                                               OnClick="@(() => OnEditApplicationAsync(context))" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Delete">
+                                                <MudIconButton Icon="@Icons.Outlined.Delete"
+                                                               Size="Size.Small"
+                                                               OnClick="@(() => OnDeleteApplicationAsync(context))"
+                                                               Disabled="@UploadStore.AsQueryable().Any(x => x.ApplicationId == context.Id)" />
+                                            </MudTooltip>
+                                            <MudTooltip Text="Properties">
+                                                <MudIconButton Icon="@Icons.Outlined.Settings"
+                                                               Size="Size.Small"
+                                                               OnClick=@(() => OnPropertiesAsync(context)) />
+                                            </MudTooltip>
+                                        </MudTd>
+                                    </RowTemplate>
                         <PagerContent>
                             <MudTablePager PageSizeOptions="new int[]{10, 20, 50}" />
                         </PagerContent>
                     </MudTable>
                 </MudItem>
-                <MudItem xs="0" md="1" lg="2"></MudItem>
             </MudGrid>
         </MudCardContent>
     </MudCard>

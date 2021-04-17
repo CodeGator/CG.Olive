@@ -1,6 +1,9 @@
 ﻿using CG.Olive.SqlServer.Maps;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CG.Olive.SqlServer
 {
@@ -61,6 +64,39 @@ namespace CG.Olive.SqlServer
             ) : base(options)
         {
 
+        }
+
+        #endregion
+
+        // *******************************************************************
+        // Public methods.
+        // *******************************************************************
+
+        #region Public methods
+
+        /// <summary>
+        /// This method removes all settings for the specified upload.
+        /// </summary>
+        /// <param name="uploadId">The upload identifier for use for the operation.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A task to perform the operation.</returns>
+        public virtual async Task RollbackUploadAsync(
+            int uploadId,
+            CancellationToken cancellationToken = default
+            )
+        {
+            // Defer to EFCore
+            await Database.ExecuteSqlRawAsync(
+                "begin transaction; " +
+                "delete from [Olive].[Settings] WHERE [UploadId] = @uploadId; " +
+                "delete from [Olive].[Uploads] WHERE [Id] = @uploadId; " +
+                "commit transaction;",
+                new[] 
+                { 
+                    new SqlParameter() { ParameterName = "uploadId", Value = uploadId } 
+                },
+                cancellationToken
+                ).ConfigureAwait(false);
         }
 
         #endregion

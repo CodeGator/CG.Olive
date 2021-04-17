@@ -128,12 +128,37 @@ namespace CG.Olive.Web.Pages.Uploads
         /// <returns>A task to perform the operation.</returns>
         protected override async Task OnInitializedAsync()
         {
+            // Give the base class a chance.
+            await base.OnInitializedAsync();
+
             // Get the current authentication state.
             _authState = await AuthenticationStateProvider.GetAuthenticationStateAsync()
                 .ConfigureAwait(false);
+        }
 
-            // Give the base class a chance.s
-            await base.OnInitializedAsync();
+        // *******************************************************************
+
+        /// <summary>
+        /// This method is called after Blazor renders the page.
+        /// </summary>
+        /// <param name="firstRender">True if this is the first render.</param>
+        protected override void OnAfterRender(bool firstRender)
+        {
+            // Give the base class a chance.
+            base.OnAfterRender(firstRender);
+
+            // Only interested in first render.
+            if (firstRender)
+            {
+                // Are there no existing uploads yet?
+                if (false == SettingStore.AsQueryable().Any())
+                {
+                    // Show the new uploads tab.
+#pragma warning disable BL0005
+                    _tabs.ActivePanelIndex = 1;
+#pragma warning restore
+                }
+            }
         }
 
         #endregion
@@ -178,6 +203,10 @@ namespace CG.Olive.Web.Pages.Uploads
             HashSet<CG.Olive.Models.Application> models
             )
         {
+            // Clear any previous state.
+            _error = "";
+            _info = "";
+
             // Look for an upload that corresponds to this file.
             var upload = _preUploads.FirstOrDefault(
                 x => x.File == file
@@ -204,6 +233,10 @@ namespace CG.Olive.Web.Pages.Uploads
             HashSet<CG.Olive.Models.Environment> models
             )
         {
+            // Clear any previous state.
+            _error = "";
+            _info = "";
+
             // Look for an upload that corresponds to this file.
             var upload = _preUploads.FirstOrDefault(
                 x => x.File == file
@@ -226,6 +259,10 @@ namespace CG.Olive.Web.Pages.Uploads
         /// <param name="model">The pre-upload for the operation.</param>
         private async Task OnDeletePreUploadAsync(PreUpload model)
         {
+            // Clear any previous state.
+            _error = "";
+            _info = "";
+
             // Prompt the user first.
             bool? result = await DialogService.ShowMessageBox(
                 "Warning",
@@ -255,43 +292,99 @@ namespace CG.Olive.Web.Pages.Uploads
         {
             try
             {
-                // First, check if we have data hanging off the upload.
-                if (SettingStore.AsQueryable().Any(x => x.UploadId == model.Id))
+                // Clear any previous state.
+                _error = "";
+                _info = "";
+
+                // First, count the child settings (if any).
+                var childCount = SettingStore.AsQueryable().Count(
+                    x => x.UploadId == model.Id
+                    );
+
+                // Does this upload have child settings?
+                if (0 < childCount)
                 {
-                    // Prompt the user first.
-                    await DialogService.ShowMessageBox(
-                        "Problem",
-                        $"The upload '{model.FileName}' has one or more settings associated with it " +
-                        $"that MUST be manually removed before the upload can be deleted.",
-                        yesText: "OK!"
+                    // If we get here then the upload has child settings so
+                    //   we need to make the user jump through a hoop to avoid
+                    //   unintended data loss.
+
+                    // Create a model for the dialog.
+                    var preDeleteModel = new PreDelete()
+                    {
+                        ModelName = model.FileName,
+                        ChildCount = childCount
+                    };
+
+                    // Pass in the model.
+                    var parameters = new DialogParameters
+                    {
+                        ["Model"] = preDeleteModel
+                    };
+
+                    // Fixup the dialog's look.
+                    var options = new DialogOptions()
+                    {
+                        MaxWidth = MaxWidth.Small,
+                        FullWidth = true
+                    };
+
+                    // Create the dialog.
+                    var dialog = DialogService.Show<DeleteDialog>(
+                        "",
+                        parameters,
+                        options
                         );
 
-                    // Nothing left to do.
-                    return;
+                    // Show the dialog.
+                    var res = await dialog.Result.ConfigureAwait(false);
+
+                    // Did the user cancel?
+                    if (res.Cancelled)
+                    {
+                        return;
+                    }
                 }
-
-                // Prompt the user first.
-                bool? result = await DialogService.ShowMessageBox(
-                    "Warning",
-                    $"This will delete the upload for: '{model.FileName}'.",
-                    yesText: "OK!",
-                    cancelText: "Cancel"
-                    ).ConfigureAwait(false);
-
-                // Did the user press ok?
-                if (result != null && result.Value)
+                else
                 {
-                    // Defer to the store.
-                    await UploadStore.DeleteAsync(
-                        model.Id
+                    // If we get here then the upload has no child settings.
+
+                    // Prompt the user first.
+                    bool? result = await DialogService.ShowMessageBox(
+                        "Warning",
+                        $"This will delete the upload for: '{model.FileName}'.",
+                        yesText: "OK!",
+                        cancelText: "Cancel"
                         ).ConfigureAwait(false);
 
-                    // Tell the world what we did.
-                    _info = $"Upload '{model.FileName}' and any related settings were deleted.";
-
-                    // Update the UI.
-                    await InvokeAsync(() => StateHasChanged());
+                    // Did the user cancel?
+                    if (result == null || false == result.Value)
+                    {
+                        return;
+                    }
                 }
+
+                // If we get here then we've prompted the user, one way or 
+                //   the other, and now we're ready to delete data.
+                                
+                // Defer to the store.
+                await SettingStore.RollbackUploadAsync(
+                    model,
+                    _authState.User.GetEmail()
+                    ).ConfigureAwait(false);
+                
+                // Tell the world what we did.
+                if (0 < childCount)
+                {
+                    _info = $"Upload '{model.FileName}' and '{childCount}' child settings were deleted.";
+                    
+                }
+                else
+                {
+                    _info = $"Upload '{model.FileName}' was deleted.";
+                }
+
+                // Update the UI.
+                await InvokeAsync(() => StateHasChanged());
             }
             catch (Exception ex)
             {
@@ -309,6 +402,10 @@ namespace CG.Olive.Web.Pages.Uploads
         /// </summary>
         private async Task OnSubmitAsync()
         {
+            // Clear any previous state.
+            _error = "";
+            _info = "";
+
             // Validate the form.
             _form.Validate();
 
@@ -375,6 +472,10 @@ namespace CG.Olive.Web.Pages.Uploads
             Upload model
             )
         {
+            // Clear any previous state.
+            _error = "";
+            _info = "";
+
             // Pass in the model.
             var parameters = new DialogParameters
             {

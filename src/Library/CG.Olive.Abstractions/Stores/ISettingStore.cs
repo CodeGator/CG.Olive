@@ -62,11 +62,24 @@ namespace CG.Olive.Stores
         /// This method parses through an upload and saves the results as settings.
         /// </summary>
         /// <param name="upload">The upload to use for the operation.</param>
-        /// <param name="userName">The user name of the person performing the aciton.</param>
+        /// <param name="userName">The user name of the person performing the action.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A task to perform the operation that returns a count of 
         /// the number of <see cref="CG.Olive.Models.Setting"/> objects created for the upload.</returns>
         Task<long> ApplyUploadAsync(
+            CG.Olive.Models.Upload upload,
+            string userName,
+            CancellationToken cancellationToken = default
+            );
+
+        /// <summary>
+        /// This method removes all the settings for the specified upload.
+        /// </summary>
+        /// <param name="upload">The upload to use for the operation.</param>
+        /// <param name="userName">The user name of the person performing the action.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A task to perform the operation.</returns>
+        Task RollbackUploadAsync(
             CG.Olive.Models.Upload upload,
             string userName,
             CancellationToken cancellationToken = default

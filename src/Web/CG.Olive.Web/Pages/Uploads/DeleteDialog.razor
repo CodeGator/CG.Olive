@@ -1,0 +1,39 @@
+﻿<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+    <MudDialog>
+        <TitleContent>
+            <div class="d-flex">
+                <MudIcon Size="Size.Small" 
+                         Icon="@Icons.Material.Outlined.CloudUpload" 
+                         class="mr-3"></MudIcon>
+                <MudText>Delete Upload</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <DataAnnotationsValidator />
+            <p>
+                <MudText Typo="Typo.h5" Color="Color.Warning">WAIT!!!</MudText>
+            </p>
+            <p>
+                <MudText Typo="Typo.body1">This will delete upload @Model.ModelName and @Model.ChildCount child settings!</MudText>
+            </p>
+            <p>                
+                <MudText Typo="Typo.body1" Color="Color.Info">This action cannot be undone!</MudText>
+            </p>
+            <p>
+                <MudText Typo="Typo.body2">To proceed, enter @Model.ModelName in the field below, and press Ok</MudText>
+            </p>
+            <MudTextField @bind-Value="@Model.VerifiedName"
+                          For="(() => Model.VerifiedName)"
+                          HelperText="@($"Enter: {Model.ModelName}")" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">
+                Cancel
+            </MudButton>
+            <MudButton Color="Color.Primary" 
+                       ButtonType="ButtonType.Submit">
+                Ok
+            </MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

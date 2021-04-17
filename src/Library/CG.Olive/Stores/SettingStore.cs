@@ -286,6 +286,42 @@ namespace CG.Olive.Stores
             return settingsCount;
         }
 
+        // *******************************************************************
+
+        /// <inheritdoc />
+        public virtual async Task RollbackUploadAsync(
+            CG.Olive.Models.Upload upload,
+            string userName,
+            CancellationToken cancellationToken = default
+            )
+        {
+            try
+            {
+                // Validate the parameters before attempting to use them.
+                Guard.Instance().ThrowIfNull(upload, nameof(upload))
+                    .ThrowIfNullOrEmpty(userName, nameof(userName));
+
+                // Defer to the repository.
+                await SettingRepository.RollbackUploadAsync(
+                    upload.Id,
+                    cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Provide better context for the error.
+                throw new StoreException(
+                    message: $"Failed to rollback settings for an upload!",
+                    innerException: ex
+                    ).SetCallerInfo()
+                     .SetOriginator(nameof(SettingStore))
+                     .SetMethodArguments(
+                        ("upload", upload),
+                        ("userName", userName)
+                        ).SetDateTime();
+            }
+        }
+
         #endregion
     }
 }

@@ -227,6 +227,46 @@ namespace CG.Olive.SqlServer.Repositories
             }            
         }
 
+        // *******************************************************************
+
+        /// <inheritdoc />
+        public virtual async Task RollbackUploadAsync(
+            int uploadId,
+            CancellationToken cancellationToken = default
+            )
+        {
+            try
+            {
+                // Validate the parameters before attempting to use them.
+                Guard.Instance().ThrowIfZero(uploadId, nameof(uploadId));
+
+                // Create a context.
+                var context = Factory.Create();
+
+                // Defer to the data-context.
+                await context.RollbackUploadAsync(
+                    uploadId,
+                    cancellationToken
+                    ).ConfigureAwait(false);
+
+                // Save the changes.
+                await context.SaveChangesAsync(
+                    cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Provide better context for the error.
+                throw new RepositoryException(
+                    message: $"Failed to rollback settings for an upload!",
+                    innerException: ex
+                    ).SetCallerInfo()
+                     .SetOriginator(nameof(SettingRepository))
+                     .SetMethodArguments(("uploadId", uploadId))
+                     .SetDateTime();
+            }
+        }
+
         #endregion
     }
 }

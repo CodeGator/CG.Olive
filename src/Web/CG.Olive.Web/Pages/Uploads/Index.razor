@@ -50,11 +50,11 @@
                                                   Elevation="0"
                                                   Dense="true">
                                             <ColGroup>
+                                                <col style="width: 60px;" />
+                                                <col style="width: 60px;" />
                                                 <col />
-                                                <col />
-                                                <col />
-                                                <col />
-                                                <col style="width: 250px;" />
+                                                <col style="width: 1px;" />
+                                                <col style="width: 125px;" />
                                             </ColGroup>
                                             <HeaderContent>
                                                 <MudTh>
@@ -162,11 +162,11 @@
                                                         Hover="true"
                                                         Dense="true">
                                                 <ColGroup>
-                                                    <col style="width: 20%;" />
-                                                    <col style="width: 20%;" />
-                                                    <col />
-                                                    <col />
-                                                    <col />
+                                                    <col style="width: 60px;" />
+                                                    <col style="width: 60px;" />
+                                                    <col style="width: 1px;" />
+                                                    <col style="width: 1px;" />
+                                                    <col style="width: 80px;" />
                                                 </ColGroup>
                                                 <HeaderContent>
                                                     <MudTh>Application</MudTh>
@@ -200,12 +200,13 @@
                                                     </MudTd>
                                                         <MudTd DataLabel="Name">@context.File.Name</MudTd>
                                                         <MudTd DataLabel="Size">@context.File.Size.FormattedAsBytes()</MudTd>
-                                                    <MudTd>
-                                                        <MudButton Variant="Variant.Outlined" 
-                                                                    StartIcon="@Icons.Outlined.Delete"
-                                                                    Size="Size.Small"
-                                                                    OnClick="@(() => OnDeletePreUploadAsync(context))">Delete</MudButton>
-                                                    </MudTd>
+                                                        <MudTd>
+                                                            <MudTooltip Text="Delete">
+                                                                <MudIconButton Icon="@Icons.Outlined.Delete"
+                                                                               Size="Size.Small"
+                                                                               OnClick=@(() => OnDeletePreUploadAsync(context)) />
+                                                            </MudTooltip>
+                                                        </MudTd>
                                                 </RowTemplate>
                                             </MudTable>
                                         }
@@ -242,6 +243,5 @@
             </MudGrid>
         </MudCardContent>
     </MudCard>
-
 }
 

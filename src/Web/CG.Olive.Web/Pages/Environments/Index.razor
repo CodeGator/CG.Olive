@@ -49,7 +49,7 @@
                         <ColGroup>
                             <col />
                             <col />
-                            <col style="min-width: 250px;" />
+                            <col style="width: 125px;" />
                         </ColGroup>
                         <HeaderContent>
                             <MudTh>
@@ -85,7 +85,8 @@
                                 <MudTooltip Text="Delete">
                                     <MudIconButton Icon="@Icons.Outlined.Delete"
                                                    Size="Size.Small"
-                                                   OnClick="@(() => OnDeleteEnvironmentAsync(context))" />
+                                                   OnClick="@(() => OnDeleteEnvironmentAsync(context))"
+                                                   Disabled="@UploadStore.AsQueryable().Any(x => x.EnvironmentId == context.Id)"/>
                                 </MudTooltip>
                                 <MudTooltip Text="Properties">
                                     <MudIconButton Icon="@Icons.Outlined.Settings"
