@@ -6,7 +6,7 @@
 [![Github discussion](https://img.shields.io/badge/Discussion-online-blue)](https://github.com/CodeGator/CG.Olive/discussions)
 
 #### What does it do?
-Olive is an internal code name for a micro-service that manages application configurations.
+Olive is a micro-service for managing application configurations from a central location.
 
 #### What platform(s) does it support?
 * .NET 5.x or higher
