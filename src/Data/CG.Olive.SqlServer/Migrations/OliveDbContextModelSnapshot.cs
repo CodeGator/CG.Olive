@@ -34,7 +34,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 16, 15, 7, 18, 877, DateTimeKind.Local).AddTicks(9215));
+                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 899, DateTimeKind.Local).AddTicks(7566));
 
                     b.Property<bool>("IsLocked")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 16, 15, 7, 18, 887, DateTimeKind.Local).AddTicks(7145));
+                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 909, DateTimeKind.Local).AddTicks(9256));
 
                     b.Property<bool>("IsDefault")
                         .ValueGeneratedOnAdd()
@@ -135,7 +135,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 16, 15, 7, 18, 903, DateTimeKind.Local).AddTicks(5617));
+                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 921, DateTimeKind.Local).AddTicks(8531));
 
                     b.Property<int>("EnvironmentId")
                         .HasColumnType("int");
@@ -149,16 +149,6 @@ namespace CG.Olive.SqlServer.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<bool>("MobileEditable")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("MobileVisible")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(50)
@@ -205,7 +195,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 16, 15, 7, 18, 890, DateTimeKind.Local).AddTicks(3397));
+                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 912, DateTimeKind.Local).AddTicks(1882));
 
                     b.Property<int>("EnvironmentId")
                         .HasColumnType("int");

@@ -168,8 +168,6 @@ namespace CG.Olive.SqlServer.Repositories
                 originalModel.Value = model.Value;
                 originalModel.Comment = model.Comment;
                 originalModel.IsSecret = model.IsSecret;
-                originalModel.MobileEditable = model.MobileEditable;
-                originalModel.MobileVisible = model.MobileVisible;
 
                 // Save the changes.
                 await context.SaveChangesAsync(

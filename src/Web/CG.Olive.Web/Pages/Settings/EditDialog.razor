@@ -10,23 +10,23 @@
         </TitleContent>
         <DialogContent>
             <DataAnnotationsValidator />
-            <MudTextField @bind-Value="@Model.Key" 
-                          For="(() => Model.Key)" 
-                          Label="Key" 
+            <MudTextField @bind-Value="@Model.Key"
+                          For="(() => Model.Key)"
+                          Label="Key"
                           ReadOnly />
             @if (null != Model.Value)
             {
-                <MudTextField @bind-Value="@Model.Value" 
-                              For="(() => Model.Value)" 
+                <MudTextField @bind-Value="@Model.Value"
+                              For="(() => Model.Value)"
                               Label="Value" />
+                <MudSwitch @bind-Checked="@Model.IsSecret"
+                           For="(() => Model.IsSecret)"
+                           Color="@(Model.IsSecret ? Color.Info : Color.Inherit)"
+                           Label="Is Secret" />
             }
-            <MudSwitch @bind-Checked="@Model.IsSecret" 
-                       For="(() => Model.IsSecret)" 
-                       Color="@(Model.IsSecret ? Color.Info : Color.Inherit)"
-                       Label="Is Secret" />
-            <MudTextField @bind-Value="@Model.Comment" 
-                          Lines="4" 
-                          For="(() => Model.Comment)" 
+            <MudTextField @bind-Value="@Model.Comment"
+                          Lines="4"
+                          For="(() => Model.Comment)"
                           Label="Comment" />
         </DialogContent>
         <DialogActions>

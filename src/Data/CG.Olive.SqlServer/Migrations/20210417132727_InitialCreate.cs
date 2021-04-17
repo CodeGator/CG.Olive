@@ -21,7 +21,7 @@ namespace CG.Olive.SqlServer.Migrations
                     IsLocked = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Sid = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     SKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 16, 15, 7, 18, 877, DateTimeKind.Local).AddTicks(9215)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 899, DateTimeKind.Local).AddTicks(7566)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -40,7 +40,7 @@ namespace CG.Olive.SqlServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 16, 15, 7, 18, 887, DateTimeKind.Local).AddTicks(7145)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 909, DateTimeKind.Local).AddTicks(9256)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -62,7 +62,7 @@ namespace CG.Olive.SqlServer.Migrations
                     EnvironmentId = table.Column<int>(type: "int", nullable: false),
                     Json = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Size = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 16, 15, 7, 18, 890, DateTimeKind.Local).AddTicks(3397)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 912, DateTimeKind.Local).AddTicks(1882)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -100,9 +100,7 @@ namespace CG.Olive.SqlServer.Migrations
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsSecret = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    MobileVisible = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    MobileEditable = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 16, 15, 7, 18, 903, DateTimeKind.Local).AddTicks(5617)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 921, DateTimeKind.Local).AddTicks(8531)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)

@@ -70,19 +70,10 @@ namespace CG.Olive.Models
         public string Comment { get; set; }
 
         /// <summary>
-        /// This property indicates the value should be read from secret storage.
+        /// This property indicates the value should be overridden from 
+        /// secret storage.
         /// </summary>
         public bool IsSecret { get; set; }
-
-        /// <summary>
-        /// This property indicated whether the setting is visible on mobile.
-        /// </summary>
-        public bool MobileVisible { get; set; }
-
-        /// <summary>
-        /// This property indicated whether the setting is editable on mobile.
-        /// </summary>
-        public bool MobileEditable { get; set; }
 
         #endregion
     }
