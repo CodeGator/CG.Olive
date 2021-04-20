@@ -1,4 +1,7 @@
-﻿using IdentityModel.Client;
+﻿using CG.Olive.Web.Options;
+using CG.Validations;
+using IdentityModel.Client;
+using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -27,6 +30,11 @@ namespace CG.Olive.Web.Services
         /// </summary>
         private readonly IHttpClientFactory _httpClientFactory;
 
+        /// <summary>
+        /// This field contains options related to the identity server.
+        /// </summary>
+        private readonly IOptions<IdentityOptions> _identityOptions;
+
         #endregion
 
         // *******************************************************************
@@ -42,14 +50,22 @@ namespace CG.Olive.Web.Services
         /// <param name="tokenProvider">The token provider to use with the service.</param>
         /// <param name="httpClientFactory">The HTTP client factory to use with 
         /// the service.</param>
+        /// <param name="identityOptions">The identity options to use with the service.</param>
         public TokenService(
             TokenProvider tokenProvider,
-            IHttpClientFactory httpClientFactory
+            IHttpClientFactory httpClientFactory,
+            IOptions<IdentityOptions> identityOptions
             )
         {
+            // Validate the parameters before attempting to use them.
+            Guard.Instance().ThrowIfNull(tokenProvider, nameof(tokenProvider))
+                .ThrowIfNull(httpClientFactory, nameof(httpClientFactory))
+                .ThrowIfNull(identityOptions, nameof(identityOptions));
+
             // Save the references.
             _tokenProvider = tokenProvider;
             _httpClientFactory = httpClientFactory;
+            _identityOptions = identityOptions;
         }
 
         #endregion
@@ -84,7 +100,6 @@ namespace CG.Olive.Web.Services
             //   enough time has gone by, since we first created the token, that we now
             //   need to refresh it again.
 
-
             // Create a new client. (Note, we don't employ a using block here because,
             //   in a server environment like this one, the HttpClient object is actually
             //   shared so we don't run out of available sockets.)
@@ -92,7 +107,7 @@ namespace CG.Olive.Web.Services
 
             // Look for a disco document on the server.
             var discoReponse = await httpClient.GetDiscoveryDocumentAsync(
-                "https://localhost:5001",
+                _identityOptions.Value.Authority,
                 cancellationToken
                 );
 
@@ -101,9 +116,11 @@ namespace CG.Olive.Web.Services
             {
                 // Panic!
                 throw new Exception(
-                    message: $"{nameof(TokenService)} error. Unable to locate a disco doc. " +
+                    message: $"Unable to locate a disco doc. " +
                     $"error: {discoReponse.Error}"
-                    );
+                    ).SetCallerInfo()
+                     .SetOriginator(nameof(TokenService))
+                     .SetDateTime();
             }
 
             // Ask for an updated access token for this client ('this client' = us).
@@ -111,8 +128,8 @@ namespace CG.Olive.Web.Services
                new RefreshTokenRequest
                {
                    Address = discoReponse.TokenEndpoint,
-                   ClientId = "DA689B8E-6B09-47DE-8328-CFFB911CE9D7",
-                   ClientSecret = "3DFC0E24-A141-4181-BFAD-10ADF2709550",
+                   ClientId = _identityOptions.Value.OIDC.ClientId,
+                   ClientSecret = _identityOptions.Value.OIDC.ClientSecret,
                    RefreshToken = _tokenProvider.RefreshToken
                }, 
                cancellationToken
@@ -123,9 +140,11 @@ namespace CG.Olive.Web.Services
             {
                 // Panic!
                 throw new Exception(
-                    message: $"{nameof(TokenService)} error. Unable to refresh the access token. " +
+                    message: $"Unable to refresh the access token. " +
                     $"error: {refreshResponse.Error}"
-                    );
+                    ).SetCallerInfo()
+                     .SetOriginator(nameof(TokenService))
+                     .SetDateTime();
             }
 
             // Update the values in the token provider.
