@@ -64,23 +64,35 @@ namespace CG.Olive.Web
             // Validate the parameters before attempting to use them.
             Guard.Instance().ThrowIfNull(services, nameof(services));
 
-            // Add the custom identity logic.
-            services.AddCustomIdentity(Configuration);
+            // Add custom identity logic.
+            services.AddCustomIdentity(
+                Configuration.GetSection("Identity")
+                );
 
-            // Add the custom services.
-            services.AddCustomServices(Configuration);
+            // Add custom miscellaneous services.
+            services.AddCustomServices(
+                Configuration.GetSection("Services")
+                );
 
-            // Add the custom Blazor logic.
-            services.AddCustomBlazor(Configuration);
+            // Add custom Blazor logic.
+            services.AddCustomBlazor(
+                Configuration
+                );
 
-            // Add the CG.Olive services.
-            services.AddCustomOlive(Configuration);
+            // Add custom CG.Olive services.
+            services.AddCustomOlive(
+                Configuration.GetSection("CG.Olive")
+                );
 
-            // Add the custom secrets handling.
-            services.AddCustomSecrets(Configuration);
+            // Add custom secrets handling.
+            services.AddCustomSecrets(
+                Configuration.GetSection("Secrets")
+                );
 
             // Add custom SignalR services.
-            services.AddCustomSignalR(Configuration);
+            services.AddCustomSignalR(
+                Configuration.GetSection("SignalR")
+                );
 
             // Add MudBlazor services.
             services.AddMudServices();

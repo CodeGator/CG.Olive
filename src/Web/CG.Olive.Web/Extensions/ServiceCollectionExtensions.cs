@@ -113,7 +113,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Configure the options.
             serviceCollection.ConfigureOptions(
-                configuration.GetSection("Identity"),
+                configuration,
                 out IdentityOptions identityOptions
                 );
 
@@ -154,8 +154,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.Scope.Add("profile");
                 options.Scope.Add("email");
                 options.Scope.Add("offline_access");
-                options.Scope.Add("api1.read");
-                options.Scope.Add("api1.write");
+                options.Scope.Add("oliveapi.read");
+                options.Scope.Add("oliveapi.write");
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.TokenValidationParameters.NameClaimType = "given_name";
@@ -186,13 +186,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Add the custom Olive stores.
             serviceCollection.AddOliveStores(
-                configuration.GetSection("CG.Olive"),
+                configuration.GetSection("Stores"),
                 ServiceLifetime.Scoped
                 );
 
             // Add the custom Olive repositories.
             serviceCollection.AddRepositories(
-                configuration.GetSection("CG.Olive:Repositories"),
+                configuration.GetSection("Repositories"),
                 ServiceLifetime.Scoped
                 );
 
@@ -267,12 +267,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Add the secret stores.
             serviceCollection.AddSecretStores(
-                configuration.GetSection("CG.Olive")
+                configuration.GetSection("Stores")
                 );
 
             // Add the secret repositories.
             serviceCollection.AddRepositories(
-                configuration.GetSection("CG.Olive:Secrets")
+                configuration
                 );
 
             // Return the service collection.
