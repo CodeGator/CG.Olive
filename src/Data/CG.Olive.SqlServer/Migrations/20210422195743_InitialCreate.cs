@@ -21,7 +21,7 @@ namespace CG.Olive.SqlServer.Migrations
                     IsLocked = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Sid = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     SKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 899, DateTimeKind.Local).AddTicks(7566)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 22, 14, 57, 43, 527, DateTimeKind.Local).AddTicks(7880)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -40,7 +40,7 @@ namespace CG.Olive.SqlServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 909, DateTimeKind.Local).AddTicks(9256)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 22, 14, 57, 43, 536, DateTimeKind.Local).AddTicks(7541)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -48,6 +48,43 @@ namespace CG.Olive.SqlServer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Environments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Features",
+                schema: "Olive",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Value = table.Column<bool>(type: "bit", nullable: false),
+                    EnvironmentId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationId = table.Column<int>(type: "int", nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 22, 14, 57, 43, 550, DateTimeKind.Local).AddTicks(9585)),
+                    CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Features", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Features_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalSchema: "Olive",
+                        principalTable: "Applications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Features_Environments_EnvironmentId",
+                        column: x => x.EnvironmentId,
+                        principalSchema: "Olive",
+                        principalTable: "Environments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +99,7 @@ namespace CG.Olive.SqlServer.Migrations
                     EnvironmentId = table.Column<int>(type: "int", nullable: false),
                     Json = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Size = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 912, DateTimeKind.Local).AddTicks(1882)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 22, 14, 57, 43, 539, DateTimeKind.Local).AddTicks(894)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -100,7 +137,7 @@ namespace CG.Olive.SqlServer.Migrations
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsSecret = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 17, 8, 27, 26, 921, DateTimeKind.Local).AddTicks(8531)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 4, 22, 14, 57, 43, 548, DateTimeKind.Local).AddTicks(2601)),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
@@ -146,6 +183,25 @@ namespace CG.Olive.SqlServer.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Features_ApplicationId",
+                schema: "Olive",
+                table: "Features",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Features_EnvironmentId",
+                schema: "Olive",
+                table: "Features",
+                column: "EnvironmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Features_Key_EnvironmentId_ApplicationId",
+                schema: "Olive",
+                table: "Features",
+                columns: new[] { "Key", "EnvironmentId", "ApplicationId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Settings_ApplicationId",
                 schema: "Olive",
                 table: "Settings",
@@ -186,6 +242,10 @@ namespace CG.Olive.SqlServer.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Features",
+                schema: "Olive");
+
             migrationBuilder.DropTable(
                 name: "Settings",
                 schema: "Olive");

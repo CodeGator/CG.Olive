@@ -1,4 +1,5 @@
-﻿using CG.Olive.Stores;
+﻿using CG.Olive.Managers;
+using CG.Olive.Stores;
 using CG.Validations;
 using Microsoft.Extensions.Configuration;
 
@@ -48,7 +49,36 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.Add<IEnvironmentStore, EnvironmentStore>(serviceLifetime);
             serviceCollection.Add<IUploadStore, UploadStore>(serviceLifetime);
             serviceCollection.Add<ISettingStore, SettingStore>(serviceLifetime);
-            serviceCollection.Add<IConfigurationStore, ConfigurationStore>(serviceLifetime);
+            serviceCollection.Add<IFeatureStore, FeatureStore>(serviceLifetime);
+
+            // Return the service collection.
+            return serviceCollection;
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method adds managers for the Olive library.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection to use for
+        /// the operation.</param>
+        /// <param name="configuration">The configuration to use for the operation.</param>
+        /// <param name="serviceLifetime">The service lifetime to use for the operation.</param>
+        /// <returns>The value of the <paramref name="serviceCollection"/> parameter,
+        /// for chaining calls together.</returns>
+        public static IServiceCollection AddOliveManagers(
+            this IServiceCollection serviceCollection,
+            IConfiguration configuration,
+            ServiceLifetime serviceLifetime = ServiceLifetime.Scoped
+            )
+        {
+            // Validate the parameters before attempting to use them.
+            Guard.Instance().ThrowIfNull(serviceCollection, nameof(serviceCollection))
+                .ThrowIfNull(configuration, nameof(configuration));
+
+            // Register the managers.
+            serviceCollection.Add<IFeatureSetManager, FeatureSetManager>(serviceLifetime);
+            serviceCollection.Add<IConfigurationManager, ConfigurationManager>(serviceLifetime);
 
             // Return the service collection.
             return serviceCollection;

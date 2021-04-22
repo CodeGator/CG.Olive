@@ -4,6 +4,7 @@ using CG.Olive.Web.Pages.Shared;
 using CG.Olive.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Routing.Template;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 using Environment = CG.Olive.Models.Environment;
 
-namespace CG.Olive.Web.Pages.Settings
+namespace CG.Olive.Web.Pages.Features
 {
     /// <summary>
     /// This class is the code-behind for the <see cref="Index"/> razor view.
@@ -37,11 +38,6 @@ namespace CG.Olive.Web.Pages.Settings
         private string _info;
 
         /// <summary>
-        /// This field contains the authentication state.
-        /// </summary>
-        private AuthenticationState _authState;
-
-        /// <summary>
         /// This field contains the identifier of the selected application.
         /// </summary>
         private int _selectedApplicationId;
@@ -52,9 +48,14 @@ namespace CG.Olive.Web.Pages.Settings
         private int _selectedEnvironmentId;
 
         /// <summary>
-        /// This field contains the settings query, for the grid.
+        /// This field contains the feature query, for the grid.
         /// </summary>
-        private IQueryable<Setting> _query = new Setting[0].AsQueryable();
+        private IQueryable<Feature> _query = new Feature[0].AsQueryable();
+
+        /// <summary>
+        /// This field contains the authentication state.
+        /// </summary>
+        private AuthenticationState _authState;
 
         /// <summary>
         /// This fields contains a reference to breadcrumbs for the view.
@@ -62,7 +63,7 @@ namespace CG.Olive.Web.Pages.Settings
         private readonly List<BreadcrumbItem> _crumbs = new()
         {
             new BreadcrumbItem("Home", href: "/"),
-            new BreadcrumbItem("Environments", href: "/environments")
+            new BreadcrumbItem("Features", href: "/features")
         };
 
         #endregion
@@ -86,10 +87,10 @@ namespace CG.Olive.Web.Pages.Settings
         private IEnvironmentStore EnvironmentStore { get; set; }
 
         /// <summary>
-        /// This property contains a reference to a setting store.
+        /// This property contains a reference to a feature store.
         /// </summary>
         [Inject]
-        private ISettingStore SettingStore { get; set; }
+        private IFeatureStore FeatureStore { get; set; }
 
         /// <summary>
         /// This property contains a reference to dialog service.
@@ -156,8 +157,10 @@ namespace CG.Olive.Web.Pages.Settings
                 _selectedEnvironmentId = 0;
             }
 
-            QueryForSettings();
+            QueryForFeatures();
         }
+
+        // *******************************************************************
 
         /// <summary>
         /// This method is called whenever the user selects an application.
@@ -175,36 +178,40 @@ namespace CG.Olive.Web.Pages.Settings
                 _selectedApplicationId = 0;
             }
 
-            QueryForSettings();
+            QueryForFeatures();
         }
 
+        // *******************************************************************
+
         /// <summary>
-        /// This method queries for settings, using the currently selected
+        /// This method queries for features, using the currently selected
         /// application and environment.
         /// </summary>
-        private void QueryForSettings()
+        private void QueryForFeatures()
         {
             if (_selectedEnvironmentId != 0 && _selectedApplicationId != 0)
             {
-                _query = SettingStore.AsQueryable()
+                _query = FeatureStore.AsQueryable()
                     .Where(x => x.ApplicationId == _selectedApplicationId &&
                                 x.EnvironmentId == _selectedEnvironmentId
                           ).OrderBy(x => x.Key);
             }
             else
             {
-                _query = new Setting[0].AsQueryable();
+                _query = new Feature[0].AsQueryable();
             }
 
             StateHasChanged();
         }
 
+        // *******************************************************************
+
         /// <summary>
         /// This method is called whenever the user presses the edit button
-        /// for a setting.
+        /// for a feature.
         /// </summary>
-        private async Task OnEditSettingAsync(
-            Setting model
+        private async Task OnEditFeatureAsync(
+            Feature model
             )
         {
             try
@@ -239,29 +246,24 @@ namespace CG.Olive.Web.Pages.Settings
                 // Did the user hit save?
                 if (!result.Cancelled)
                 {
-                    // Set any change to the comment.
+                    // Set the changes to the model.
                     model.Comment = temp.Comment;
-                    model.IsSecret = temp.IsSecret;
-
-                    // Only change the value if it's not a parent node.
-                    if (null != model.Value)
-                    {
-                        // Save any value change.
-                        model.Value = temp.Value;
-                    }
+                    model.Value = temp.Value;
+                    model.UpdatedBy = temp.UpdatedBy;
+                    model.UpdatedDate = temp.UpdatedDate;
 
                     // Defer to the store.
-                    _ = await SettingStore.UpdateAsync(
+                    _ = await FeatureStore.UpdateAsync(
                         model
                         ).ConfigureAwait(false);
 
                     // Notify the back-channel.
-                    await SignalRHub.OnChangeSettingAsync(
+                    await SignalRHub.OnChangeFeatureAsync(
                         model
                         ).ConfigureAwait(false);
 
                     // Tell the world what we did.
-                    _info = $"Setting was updated";
+                    _info = $"Feature was updated";
                 }
             }
             catch (Exception ex)
@@ -281,7 +283,7 @@ namespace CG.Olive.Web.Pages.Settings
         /// for a model.
         /// </summary>
         private async Task OnPropertiesAsync(
-            Setting model
+            Feature model
             )
         {
             // Pass in the model.
@@ -291,7 +293,7 @@ namespace CG.Olive.Web.Pages.Settings
             };
 
             // Create the dialog.
-            var dialog = DialogService.Show<AuditDialog<Setting>>(
+            var dialog = DialogService.Show<AuditDialog<Feature>>(
                 "",
                 parameters
                 );

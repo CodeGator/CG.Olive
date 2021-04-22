@@ -1,4 +1,6 @@
-﻿using CG.Business.Stores;
+﻿using CG.Business.Managers;
+using CG.Business.Stores;
+using CG.Olive.Stores;
 using CG.Secrets.Stores;
 using CG.Validations;
 using Microsoft.Extensions.Logging;
@@ -8,13 +10,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CG.Olive.Stores
+namespace CG.Olive.Managers
 {
     /// <summary>
-    /// This class is a default implementation of the <see cref="IConfigurationStore"/>
+    /// This class is a default implementation of the <see cref="IConfigurationManager"/>
     /// interface.
     /// </summary>
-    public class ConfigurationStore : StoreBase, IConfigurationStore
+    public class ConfigurationManager : ManagerBase, IConfigurationManager
     {
         // *******************************************************************
         // Properties.
@@ -25,7 +27,7 @@ namespace CG.Olive.Stores
         /// <summary>
         /// This property contains a reference to a logger.
         /// </summary>
-        protected ILogger<ConfigurationStore> Logger { get; }
+        protected ILogger<ConfigurationManager> Logger { get; }
 
         /// <summary>
         /// This property contains a reference to an application store.
@@ -45,7 +47,7 @@ namespace CG.Olive.Stores
         /// <summary>
         /// This property contains a reference to a secret store.
         /// </summary>
-        protected ISecretStore SecretStore { get; }        
+        protected ISecretStore SecretStore { get; }
 
         #endregion
 
@@ -56,16 +58,16 @@ namespace CG.Olive.Stores
         #region Constructors
 
         /// <summary>
-        /// This constructor creates a new instance of the <see cref="ConfigurationStore"/>
+        /// This constructor creates a new instance of the <see cref="ConfigurationManager"/>
         /// class.
         /// </summary>
-        /// <param name="logger">The logger to use for the store.</param>
-        /// <param name="applicationStore">The application store to use with the store.</param>
-        /// <param name="environmentStore">The environment store to use with the store.</param>
-        /// <param name="settingStore">The setting store to use with the store.</param>
-        /// <param name="secretStore">The secret store to use with the store.</param>
-        public ConfigurationStore(
-            ILogger<ConfigurationStore> logger,
+        /// <param name="logger">The logger to use for the manager.</param>
+        /// <param name="applicationStore">The application store to use with the manager.</param>
+        /// <param name="environmentStore">The environment store to use with the manager.</param>
+        /// <param name="settingStore">The setting store to use with the manager.</param>
+        /// <param name="secretStore">The secret store to use with the manager.</param>
+        public ConfigurationManager(
+            ILogger<ConfigurationManager> logger,
             IApplicationStore applicationStore,
             IEnvironmentStore environmentStore,
             ISettingStore settingStore,
@@ -122,10 +124,10 @@ namespace CG.Olive.Stores
                 if (null == appModel)
                 {
                     // Panic!!
-                    throw new StoreException(
+                    throw new ManagerException(
                         message: "Login failed!"
                         ).SetCallerInfo()
-                         .SetOriginator(nameof(ConfigurationStore))
+                         .SetOriginator(nameof(ConfigurationManager))
                          .SetDateTime();
                 }
 
@@ -138,10 +140,10 @@ namespace CG.Olive.Stores
                 if (null == defaultEnvModel)
                 {
                     // Panic!!
-                    throw new StoreException(
+                    throw new ManagerException(
                         message: "No default enviroment located!"
                         ).SetCallerInfo()
-                         .SetOriginator(nameof(ConfigurationStore))
+                         .SetOriginator(nameof(ConfigurationManager))
                          .SetDateTime();
                 }
 
@@ -223,10 +225,10 @@ namespace CG.Olive.Stores
                     if (null == envModel)
                     {
                         // Panic!!
-                        throw new StoreException(
+                        throw new ManagerException(
                             message: $"Environment '{environment}' not found!"
                             ).SetCallerInfo()
-                             .SetOriginator(nameof(ConfigurationStore))
+                             .SetOriginator(nameof(ConfigurationManager))
                              .SetDateTime();
                     }
 
@@ -316,11 +318,11 @@ namespace CG.Olive.Stores
             catch (Exception ex)
             {
                 // Provide better context for the error.
-                throw new StoreException(
+                throw new ManagerException(
                     message: $"Failed to query for a configuration!",
                     innerException: ex
                     ).SetCallerInfo()
-                     .SetOriginator(nameof(ConfigurationStore))
+                     .SetOriginator(nameof(ConfigurationManager))
                      .SetDateTime();
             }
         }

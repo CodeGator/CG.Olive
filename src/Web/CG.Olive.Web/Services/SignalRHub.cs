@@ -1,7 +1,5 @@
 ﻿using CG.Olive.Models;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,10 +20,7 @@ namespace CG.Olive.Web.Services
         /// This constructor creates a new instance of the <see cref="SignalRHub"/>
         /// class.
         /// </summary>
-        public SignalRHub()
-        {
-
-        }
+        public SignalRHub() { }
 
         #endregion
 
@@ -41,7 +36,7 @@ namespace CG.Olive.Web.Services
         /// <param name="model">The setting that was changed.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A task to perform the operation.</returns>
-        public async Task OnChangeAsync(
+        public async Task OnChangeSettingAsync(
             Setting model,
             CancellationToken cancellationToken = default
             )
@@ -57,7 +52,38 @@ namespace CG.Olive.Web.Services
 
                 // Send the message to everyone.
                 await Clients.All.SendAsync(
-                    "Change",
+                    "ChangeSetting",
+                    json,
+                    cancellationToken
+                    ).ConfigureAwait(false);
+            }
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method sends a change notification.
+        /// </summary>
+        /// <param name="model">The setting that was changed.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A task to perform the operation.</returns>
+        public async Task OnChangeFeatureAsync(
+            Feature model,
+            CancellationToken cancellationToken = default
+            )
+        {
+            // Do we have any clients to notify?
+            if (Clients != null && Clients.All != null)
+            {
+                // Serialize the model.
+                var json = "{" +
+                    "\"Key\": \"" + model.Key + "\"," +
+                    "\"Sid\": \"" + model.Application.Sid + "\"," +
+                    "}";
+
+                // Send the message to everyone.
+                await Clients.All.SendAsync(
+                    "ChangeFeature",
                     json,
                     cancellationToken
                     ).ConfigureAwait(false);

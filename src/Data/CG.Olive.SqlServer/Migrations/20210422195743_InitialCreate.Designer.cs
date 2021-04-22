@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CG.Olive.SqlServer.Migrations
 {
     [DbContext(typeof(OliveDbContext))]
-    [Migration("20210417132727_InitialCreate")]
+    [Migration("20210422195743_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 899, DateTimeKind.Local).AddTicks(7566));
+                        .HasDefaultValue(new DateTime(2021, 4, 22, 14, 57, 43, 527, DateTimeKind.Local).AddTicks(7880));
 
                     b.Property<bool>("IsLocked")
                         .ValueGeneratedOnAdd()
@@ -88,7 +88,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 909, DateTimeKind.Local).AddTicks(9256));
+                        .HasDefaultValue(new DateTime(2021, 4, 22, 14, 57, 43, 536, DateTimeKind.Local).AddTicks(7541));
 
                     b.Property<bool>("IsDefault")
                         .ValueGeneratedOnAdd()
@@ -115,6 +115,63 @@ namespace CG.Olive.SqlServer.Migrations
                     b.ToTable("Environments", "Olive");
                 });
 
+            modelBuilder.Entity("CG.Olive.Models.Feature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2021, 4, 22, 14, 57, 43, 550, DateTimeKind.Local).AddTicks(9585));
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("EnvironmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Value")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.HasIndex("EnvironmentId");
+
+                    b.HasIndex("Key", "EnvironmentId", "ApplicationId")
+                        .IsUnique();
+
+                    b.ToTable("Features", "Olive");
+                });
+
             modelBuilder.Entity("CG.Olive.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -137,7 +194,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 921, DateTimeKind.Local).AddTicks(8531));
+                        .HasDefaultValue(new DateTime(2021, 4, 22, 14, 57, 43, 548, DateTimeKind.Local).AddTicks(2601));
 
                     b.Property<int>("EnvironmentId")
                         .HasColumnType("int");
@@ -197,7 +254,7 @@ namespace CG.Olive.SqlServer.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 4, 17, 8, 27, 26, 912, DateTimeKind.Local).AddTicks(1882));
+                        .HasDefaultValue(new DateTime(2021, 4, 22, 14, 57, 43, 539, DateTimeKind.Local).AddTicks(894));
 
                     b.Property<int>("EnvironmentId")
                         .HasColumnType("int");
@@ -229,6 +286,25 @@ namespace CG.Olive.SqlServer.Migrations
                         .IsUnique();
 
                     b.ToTable("Uploads", "Olive");
+                });
+
+            modelBuilder.Entity("CG.Olive.Models.Feature", b =>
+                {
+                    b.HasOne("CG.Olive.Models.Application", "Application")
+                        .WithMany()
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CG.Olive.Models.Environment", "Environment")
+                        .WithMany()
+                        .HasForeignKey("EnvironmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+
+                    b.Navigation("Environment");
                 });
 
             modelBuilder.Entity("CG.Olive.Models.Setting", b =>

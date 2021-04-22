@@ -1,4 +1,5 @@
-﻿using CG.Olive.Models;
+﻿using CG.Olive.Managers;
+using CG.Olive.Models;
 using CG.Olive.Stores;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -71,10 +72,10 @@ namespace CG.Olive.Web.Pages.Configuration
         #region Properties
 
         /// <summary>
-        /// This property contains a reference to a configuration store.
+        /// This property contains a reference to a configuration manager.
         /// </summary>
         [Inject]
-        private IConfigurationStore ConfigurationStore { get; set; }
+        private IConfigurationManager ConfigurationManager { get; set; }
 
         /// <summary>
         /// This property contains a reference to an application store.
@@ -150,7 +151,7 @@ namespace CG.Olive.Web.Pages.Configuration
                 if (null != _selectedEnvironment && null != _selectedApplication)
                 {
                     // Defer to the store.
-                    _data = await ConfigurationStore.GetAsync(
+                    _data = await ConfigurationManager.GetAsync(
                         _selectedApplication.Sid,
                         _selectedApplication.SKey,
                         _selectedEnvironment.Name

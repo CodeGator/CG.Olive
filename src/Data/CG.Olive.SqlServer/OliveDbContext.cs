@@ -46,6 +46,12 @@ namespace CG.Olive.SqlServer
         /// </summary>
         public virtual DbSet<CG.Olive.Models.Setting> Settings { get; set; }
 
+        /// <summary>
+        /// This property contains a set of <see cref="CG.Olive.Models.Feature"/>
+        /// objects.
+        /// </summary>
+        public virtual DbSet<CG.Olive.Models.Feature> Features { get; set; }
+
         #endregion
 
         // *******************************************************************
@@ -118,6 +124,7 @@ namespace CG.Olive.SqlServer
             modelBuilder.ApplyConfiguration(new EnvironmentMap());
             modelBuilder.ApplyConfiguration(new UploadMap());
             modelBuilder.ApplyConfiguration(new SettingMap());
+            modelBuilder.ApplyConfiguration(new FeatureMap());
 
             // Give the base class a chance.
             base.OnModelCreating(modelBuilder);

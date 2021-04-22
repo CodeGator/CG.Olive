@@ -1,0 +1,36 @@
+﻿<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+    <MudDialog>
+        <TitleContent>
+            <div class="d-flex">
+                <MudIcon Size="Size.Small" 
+                         Icon="@Icons.Material.Filled.Edit" 
+                         class="mr-3"></MudIcon>
+                <MudText>Edit Feature</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <DataAnnotationsValidator />
+            <MudTextField @bind-Value="@Model.Key"
+                          For="(() => Model.Key)"
+                          Label="Key"
+                          ReadOnly />
+            <MudSwitch @bind-Checked="@Model.Value"
+                       For="(() => Model.Value)"
+                       Color="@(Model.Value ? Color.Info : Color.Inherit)" 
+                       Label="@(Model.Value ? "Value - On" : "Value - Off")" />
+            <MudTextField @bind-Value="@Model.Comment"
+                          Lines="4"
+                          For="(() => Model.Comment)"
+                          Label="Comment" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">
+                Cancel
+            </MudButton>
+            <MudButton Color="Color.Primary" 
+                       ButtonType="ButtonType.Submit">
+                Save Changes
+            </MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

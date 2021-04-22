@@ -78,6 +78,7 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.Add<IEnvironmentRepository, EnvironmentRepository>(serviceLifetime);
             serviceCollection.Add<IUploadRepository, UploadRepository>(serviceLifetime);
             serviceCollection.Add<ISettingRepository, SettingRepository>(serviceLifetime);
+            serviceCollection.Add<IFeatureRepository, FeatureRepository>(serviceLifetime);
 
             // Return the service collection.
             return serviceCollection;

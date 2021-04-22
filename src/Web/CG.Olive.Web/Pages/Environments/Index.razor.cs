@@ -225,6 +225,8 @@ namespace CG.Olive.Web.Pages.Environments
                 {
                     // Set the changes to the model.
                     model.Name = temp.Name;
+                    model.UpdatedBy = temp.UpdatedBy;
+                    model.UpdatedDate = temp.UpdatedDate;
 
                     // Defer to the store.
                     _ = await EnvironmentStore.UpdateAsync(

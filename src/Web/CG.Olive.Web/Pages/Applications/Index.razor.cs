@@ -217,6 +217,8 @@ namespace CG.Olive.Web.Pages.Applications
                     model.IsLocked = temp.IsLocked;
                     model.Sid = temp.Sid;
                     model.SKey = temp.SKey;
+                    model.UpdatedBy = temp.UpdatedBy;
+                    model.UpdatedDate = temp.UpdatedDate;
 
                     // Defer to the store.
                     _ = await ApplicationStore.UpdateAsync(

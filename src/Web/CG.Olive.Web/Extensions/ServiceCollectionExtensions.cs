@@ -190,6 +190,12 @@ namespace Microsoft.Extensions.DependencyInjection
                 ServiceLifetime.Scoped
                 );
 
+            // Add the custom Olive managers.
+            serviceCollection.AddOliveManagers(
+                configuration.GetSection("Managers"),
+                ServiceLifetime.Scoped
+                );
+
             // Add the custom Olive repositories.
             serviceCollection.AddRepositories(
                 configuration.GetSection("Repositories"),

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
-using Setting = CG.Olive.Models.Setting;
+using Feature = CG.Olive.Models.Feature;
 
-namespace CG.Olive.Web.Pages.Settings
+namespace CG.Olive.Web.Pages.Features
 {
     /// <summary>
     /// This class is the code-behind for the <see cref="EditDialog"/> razor view.
@@ -27,7 +27,7 @@ namespace CG.Olive.Web.Pages.Settings
         /// This property contains a reference to the model.
         /// </summary>
         [Parameter]
-        public Setting Model { get; set; }
+        public Feature Model { get; set; }
 
         #endregion
 

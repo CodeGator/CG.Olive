@@ -32,7 +32,7 @@ namespace CG.Olive.Stores
         protected ILogger<SettingStore> Logger { get; }
 
         /// <summary>
-        /// This model contains a reference to an upload repository.
+        /// This model contains a reference to an setting repository.
         /// </summary>
         protected ISettingRepository SettingRepository { get; }
 
@@ -49,20 +49,20 @@ namespace CG.Olive.Stores
         /// class.
         /// </summary>
         /// <param name="logger">The logger to use for the store.</param>
-        /// <param name="uploadRepository">The upload repository to use
+        /// <param name="settingRepository">The setting repository to use
         /// with the store.</param>
         public SettingStore(
             ILogger<SettingStore> logger,
-            ISettingRepository uploadRepository
+            ISettingRepository settingRepository
             )
         {
             // Validate the parameters before attempting to use them.
             Guard.Instance().ThrowIfNull(logger, nameof(logger))
-                .ThrowIfNull(uploadRepository, nameof(uploadRepository));
+                .ThrowIfNull(settingRepository, nameof(settingRepository));
 
             // Save the references.
             Logger = logger;
-            SettingRepository = uploadRepository;
+            SettingRepository = settingRepository;
         }
 
         #endregion
@@ -272,12 +272,12 @@ namespace CG.Olive.Stores
             {
                 // Panic!
                 throw new StoreException(
-                    message: "Failed to parse the upload and save the settings!",
+                    message: "Failed to parse the setting and save the settings!",
                     innerException: new AggregateException(errors)
                     ).SetCallerInfo()
                      .SetOriginator(nameof(SettingStore))
                      .SetMethodArguments(
-                        ("upload", upload),
+                        ("supload", upload),
                         ("userName", userName)
                         ).SetDateTime();
             }
@@ -290,7 +290,7 @@ namespace CG.Olive.Stores
 
         /// <inheritdoc />
         public virtual async Task RollbackUploadAsync(
-            CG.Olive.Models.Upload upload,
+            CG.Olive.Models.Upload setting,
             string userName,
             CancellationToken cancellationToken = default
             )
@@ -298,12 +298,12 @@ namespace CG.Olive.Stores
             try
             {
                 // Validate the parameters before attempting to use them.
-                Guard.Instance().ThrowIfNull(upload, nameof(upload))
+                Guard.Instance().ThrowIfNull(setting, nameof(setting))
                     .ThrowIfNullOrEmpty(userName, nameof(userName));
 
                 // Defer to the repository.
                 await SettingRepository.RollbackUploadAsync(
-                    upload.Id,
+                    setting.Id,
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -311,12 +311,12 @@ namespace CG.Olive.Stores
             {
                 // Provide better context for the error.
                 throw new StoreException(
-                    message: $"Failed to rollback settings for an upload!",
+                    message: $"Failed to rollback settings for an setting!",
                     innerException: ex
                     ).SetCallerInfo()
                      .SetOriginator(nameof(SettingStore))
                      .SetMethodArguments(
-                        ("upload", upload),
+                        ("setting", setting),
                         ("userName", userName)
                         ).SetDateTime();
             }

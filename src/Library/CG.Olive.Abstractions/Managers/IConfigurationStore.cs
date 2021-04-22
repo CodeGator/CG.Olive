@@ -1,15 +1,16 @@
-﻿using CG.Business.Stores;
+﻿using CG.Business.Managers;
+using CG.Olive.Models;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CG.Olive.Stores
+namespace CG.Olive.Managers
 {
     /// <summary>
-    /// This interface represents an object that manages configurations for 
-    /// external clients.
+    /// This interface represents an object that manages configurations, which
+    /// are sets of <see cref="Setting"/> objects.
     /// </summary>
-    public interface IConfigurationStore : IStore
+    public interface IConfigurationManager : IManager
     {
         /// <summary>
         /// This method returns the effective configuration for the specified 

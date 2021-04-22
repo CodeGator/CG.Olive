@@ -36,6 +36,7 @@ namespace CG.Olive.SqlServer
             context.SeedEnvironments();
             //context.SeedUploads();
             //context.SeedSettings();
+            context.SeedFeatures();
         }
 
         #endregion
@@ -254,6 +255,38 @@ namespace CG.Olive.SqlServer
                 EnvironmentId = context.Environments.First(x => x.Name == "Production").Id,
                 Comment = "test comment",
                 IsSecret = false,
+                CreatedBy = "seed",
+                CreatedDate = DateTime.Now
+            });
+
+            // Save the changes.
+            context.SaveChanges();
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method applies seed data to the Features table.
+        /// </summary>
+        /// <param name="context">The data-context to use for the operation.</param>
+        private static void SeedFeatures(
+            this OliveDbContext context
+            )
+        {
+            // Don't seed an already populated table.
+            if (true == context.Features.Any())
+            {
+                return;
+            }
+
+            // Add data to the table.
+            context.Add(new Models.Feature()
+            {
+                Key = "A",
+                Enabled = true,
+                ApplicationId = context.Applications.First(x => x.Name == "CG.Obsidian.Web").Id,
+                EnvironmentId = context.Environments.First(x => x.Name == "Production").Id,
+                Comment = "test comment",
                 CreatedBy = "seed",
                 CreatedDate = DateTime.Now
             });

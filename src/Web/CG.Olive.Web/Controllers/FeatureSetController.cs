@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 namespace CG.Olive.Web.Controllers
 {
     /// <summary>
-    /// This class is a REST controller for configuration related operations.
+    /// This class is a REST controller for feature related operations.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ConfigurationController : ControllerBase
+    public class FeatureSetController : ControllerBase
     {
         // *******************************************************************
         // Fields.
@@ -26,9 +26,9 @@ namespace CG.Olive.Web.Controllers
         #region Fields
 
         /// <summary>
-        /// This field contains a reference to a configuration manager.
+        /// This field contains a reference to a feature manager.
         /// </summary>
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IFeatureSetManager _featureManager;
 
         #endregion
 
@@ -39,20 +39,20 @@ namespace CG.Olive.Web.Controllers
         #region Constructors
 
         /// <summary>
-        /// This constructor creates a new instance of the <see cref="ConfigurationController"/>
+        /// This constructor creates a new instance of the <see cref="FeatureSetController"/>
         /// class.
         /// </summary>
-        /// <param name="configurationManager">The configuration manager to use with 
+        /// <param name="featureManager">The feature manager to use with 
         /// the controller.</param>
-        public ConfigurationController(
-            IConfigurationManager configurationManager
+        public FeatureSetController(
+            IFeatureSetManager featureManager
             )
         {
             // Validate the parameters before attempting to use them.
-            Guard.Instance().ThrowIfNull(configurationManager, nameof(configurationManager));
+            Guard.Instance().ThrowIfNull(featureManager, nameof(featureManager));
 
             // Save the references.
-            _configurationManager = configurationManager;
+            _featureManager = featureManager;
         }
 
         #endregion
@@ -64,7 +64,7 @@ namespace CG.Olive.Web.Controllers
         #region Public methods
 
         /// <summary>
-        /// This method retrieves a configuration for the specified application
+        /// This method retrieves a feature set for the specified application
         /// and environment.
         /// </summary>
         /// <param name="model">The model to use for the operation.</param>
@@ -78,7 +78,7 @@ namespace CG.Olive.Web.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public virtual async Task<IActionResult> PostAsync(
-            [FromBody] ConfigurationRequest model
+            [FromBody] FeatureSetRequest model
             )
         {
             try
@@ -93,20 +93,20 @@ namespace CG.Olive.Web.Controllers
                 }
 
                 // Defer to the store.
-                var settings = await _configurationManager.GetAsync(
+                var features = await _featureManager.GetAsync(
                     model.Sid,
                     model.SKey, 
                     model.Environment
                     ).ConfigureAwait(false);
 
                 // Return the results.
-                return Ok(settings);
+                return Ok(features);
             }
             catch (Exception ex)
             {
                 // Return a summary of the problem.
                 return Problem(
-                    title: $"{nameof(ConfigurationController)} error!",
+                    title: $"{nameof(FeatureSetController)} error!",
                     detail: $"Message: {ex.Message}",
                     statusCode: StatusCodes.Status500InternalServerError
                     );
