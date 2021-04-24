@@ -29,6 +29,12 @@ namespace CG.Olive.Web.Pages.Features
         [Parameter]
         public Feature Model { get; set; }
 
+        /// <summary>
+        /// This property contains a caption string.
+        /// </summary>
+        [Parameter]
+        public string Caption { get; set; }
+
         #endregion
 
         // *******************************************************************

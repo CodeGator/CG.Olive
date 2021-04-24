@@ -38,14 +38,14 @@ namespace CG.Olive.Web.Pages.Features
         private string _info;
 
         /// <summary>
-        /// This field contains the identifier of the selected application.
+        /// This field contains the selected application.
         /// </summary>
-        private int _selectedApplicationId;
+        private Application _selectedApplication;
 
         /// <summary>
-        /// This field contains the identifier of the selected environment.
+        /// This field contains the selected environment.
         /// </summary>
-        private int _selectedEnvironmentId;
+        private Environment _selectedEnvironment;
 
         /// <summary>
         /// This field contains the feature query, for the grid.
@@ -147,15 +147,7 @@ namespace CG.Olive.Web.Pages.Features
         /// <param name="models">The environments selected in the UI.</param>
         private void OnEnvironmentChanged(HashSet<Environment> models)
         {
-            var environment = models.FirstOrDefault();
-            if (null != environment)
-            {
-                _selectedEnvironmentId = environment.Id;
-            }
-            else
-            {
-                _selectedEnvironmentId = 0;
-            }
+            _selectedEnvironment = models.FirstOrDefault();
 
             QueryForFeatures();
         }
@@ -168,15 +160,7 @@ namespace CG.Olive.Web.Pages.Features
         /// <param name="models">The applications selected in the UI.</param>
         private void OnApplicationChanged(HashSet<Application> models)
         {
-            var application = models.FirstOrDefault();
-            if (null != application)
-            {
-                _selectedApplicationId = application.Id;
-            }
-            else
-            {
-                _selectedApplicationId = 0;
-            }
+            _selectedApplication = models.FirstOrDefault();
 
             QueryForFeatures();
         }
@@ -189,11 +173,11 @@ namespace CG.Olive.Web.Pages.Features
         /// </summary>
         private void QueryForFeatures()
         {
-            if (_selectedEnvironmentId != 0 && _selectedApplicationId != 0)
+            if (null != _selectedEnvironment && null != _selectedApplication)
             {
                 _query = FeatureStore.AsQueryable()
-                    .Where(x => x.ApplicationId == _selectedApplicationId &&
-                                x.EnvironmentId == _selectedEnvironmentId
+                    .Where(x => x.ApplicationId == _selectedApplication.Id &&
+                                x.EnvironmentId == _selectedEnvironment.Id
                           ).OrderBy(x => x.Key);
             }
             else
@@ -231,12 +215,13 @@ namespace CG.Olive.Web.Pages.Features
                 //   if the user eventually presses cancel.
                 var parameters = new DialogParameters
                 {
-                    ["Model"] = temp
+                    ["Model"] = temp,
+                    ["Caption"] = "Edit Feature"
                 };
 
                 // Create the dialog.
                 var dialog = DialogService.Show<EditDialog>(
-                    "",
+                    "Edit Feature",
                     parameters
                     );
 
@@ -263,7 +248,7 @@ namespace CG.Olive.Web.Pages.Features
                         ).ConfigureAwait(false);
 
                     // Tell the world what we did.
-                    _info = $"Feature was updated";
+                    _info = $"Feature: '{model.Key}' was updated";
                 }
             }
             catch (Exception ex)
@@ -300,6 +285,115 @@ namespace CG.Olive.Web.Pages.Features
 
             // Show the dialog.
             _ = await dialog.Result.ConfigureAwait(false);
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method is called whenever the user presses the add button
+        /// </summary>
+        private async Task OnAddFeatureAsync()
+        {
+            try
+            {
+                // Reset any error / information.
+                _error = "";
+                _info = "";
+
+                // Create a model.
+                var model = new Feature()
+                {
+                    ApplicationId = _selectedApplication.Id,
+                    EnvironmentId = _selectedEnvironment.Id,
+
+                    // Make the form validations happy.
+                    CreatedBy = _authState.User.GetEmail(),
+                    CreatedDate = DateTime.Now
+                };
+
+                // Pass the model to the dialog.
+                var parameters = new DialogParameters
+                {
+                    ["Model"] = model,
+                    ["Caption"] = "Add Feature"
+                };
+
+                // Create the dialog.
+                var dialog = DialogService.Show<EditDialog>(
+                    "Add Feature",
+                    parameters
+                    );
+
+                // Show the dialog.
+                var result = await dialog.Result.ConfigureAwait(false);
+
+                // Did the user hit save?
+                if (!result.Cancelled)
+                {
+                    // Defer to the store.
+                    _ = await FeatureStore.AddAsync(
+                        model
+                        ).ConfigureAwait(false);
+
+                    // Tell the world what we did.
+                    _info = $"Feature: '{model.Key}' was created";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Save the error.
+                _error = ex.Message.Split('|').First();
+            }
+
+            // Update the UI.
+            await InvokeAsync(() => StateHasChanged());
+        }
+
+        // *******************************************************************
+
+        /// <summary>
+        /// This method is called whenever the user presses the delete button
+        /// for an existing feature.
+        /// </summary>
+        /// <param name="model">The model for the operation.</param>
+        private async Task OnDeleteFeatureAsync(
+            Feature model
+            )
+        {
+            try
+            {
+                // Reset any error.
+                _error = "";
+                _info = "";
+
+                // Prompt the user first.
+                bool? result = await DialogService.ShowMessageBox(
+                    "Warning",
+                    $"This will delete the feature: '{model.Key}'.",
+                    yesText: "OK!",
+                    cancelText: "Cancel"
+                    );
+
+                // Did the user press ok?
+                if (result != null && result.Value)
+                {
+                    // Defer to the store.
+                    await FeatureStore.DeleteAsync(
+                        model.Id
+                        ).ConfigureAwait(false);
+
+                    // Tell the world what we did.
+                    _info = $"Feature: '{model.Key}' was deleted";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Tell the world what happened.
+                _error = ex.Message.Split('|').First();
+            }
+
+            // Update the UI.
+            await InvokeAsync(() => StateHasChanged());
         }
 
         #endregion

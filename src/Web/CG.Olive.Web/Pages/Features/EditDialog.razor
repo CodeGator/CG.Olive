@@ -5,7 +5,7 @@
                 <MudIcon Size="Size.Small" 
                          Icon="@Icons.Material.Filled.Edit" 
                          class="mr-3"></MudIcon>
-                <MudText>Edit Feature</MudText>
+                <MudText>@Caption</MudText>
             </div>
         </TitleContent>
         <DialogContent>
@@ -13,7 +13,7 @@
             <MudTextField @bind-Value="@Model.Key"
                           For="(() => Model.Key)"
                           Label="Key"
-                          ReadOnly />
+                          ReadOnly = "@(Model.Id != 0)" />
             <MudSwitch @bind-Checked="@Model.Value"
                        For="(() => Model.Value)"
                        Color="@(Model.Value ? Color.Info : Color.Inherit)" 

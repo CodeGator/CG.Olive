@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Description>Olive is a microservice, from CodeGator, that manages application configurations.</Description>
+    <Description>Olive is a microservice, from CodeGator, that manages application configurations and feature sets.</Description>
     <Copyright>Copyright © 2020 - 2021 by CodeGator. All rights reserved.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/CodeGator/CG.Olive</PackageProjectUrl>

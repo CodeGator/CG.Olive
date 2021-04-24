@@ -1,6 +1,8 @@
 ﻿@page "/features"
 @attribute [Authorize]
 
+@using Environment = CG.Olive.Models.Environment; 
+
 <MudBreadcrumbs Items="_crumbs"></MudBreadcrumbs>
 
 <MudText Typo="Typo.h4">
@@ -38,7 +40,7 @@
                 <MudGrid Justify="Justify.Center">
                     <MudItem xs="2" md="2" lg="2"></MudItem>
                     <MudItem xs="8" md="8" lg="8">
-                        @if (_selectedApplicationId == 0 && _selectedEnvironmentId == 0)
+                        @if (null == _selectedApplication && null == _selectedEnvironment)
                         {
                             <div class="d-flex">
                                 <MudIcon Icon="@Icons.Outlined.Help"
@@ -57,8 +59,9 @@
                     <MudItem xs="4" md="4" lg="4">
                         <MudSelect T="CG.Olive.Models.Application"
                                    Label="Application"
-                                   HelperText="@(_selectedApplicationId  == 0 ? "Select an application to show features" : "")"
-                                   SelectedValuesChanged="OnApplicationChanged">
+                                   HelperText="@(null == _selectedApplication ? "Select an application to show features" : "")"
+                                   SelectedValuesChanged="OnApplicationChanged"
+                                   SelectedValues="@(new HashSet<Application>(new[] { _selectedApplication }))">
                             @foreach (var item in ApplicationStore.AsQueryable())
                             {
                                 <MudSelectItem Value="@item">
@@ -70,8 +73,9 @@
                     <MudItem xs="4" md="4" lg="4">
                         <MudSelect T="CG.Olive.Models.Environment"
                                    Label="Environment"
-                                   HelperText="@(_selectedEnvironmentId  == 0 ? "Select an environment to show features" : "")"
-                                   SelectedValuesChanged="OnEnvironmentChanged">
+                                   HelperText="@(null == _selectedEnvironment ? "Select an environment to show features" : "")"
+                                   SelectedValuesChanged="OnEnvironmentChanged"
+                                   SelectedValues="@(new HashSet<Environment>(new[] { _selectedEnvironment }))">
                             @foreach (var item in EnvironmentStore.AsQueryable())
                             {
                                 <MudSelectItem Value="@item">@item.Name</MudSelectItem>
@@ -92,6 +96,14 @@
                                   Items="_query"
                                   Elevation="0"
                                   Dense="true">
+                            <ToolBarContent>
+                                <MudButton Variant="Variant.Outlined"
+                                           StartIcon="@Icons.Outlined.Add"
+                                           Size="Size.Small"
+                                           OnClick="OnAddFeatureAsync">
+                                    Add
+                                </MudButton>
+                            </ToolBarContent>
                             <ColGroup>
                                 <col />
                                 <col />
@@ -136,6 +148,11 @@
                                                        Size="Size.Small"
                                                        OnClick=@(() => OnEditFeatureAsync(context)) />
                                     </MudTooltip>
+                                    <MudTooltip Text="Delete">
+                                        <MudIconButton Icon="@Icons.Outlined.Delete"
+                                                       Size="Size.Small"
+                                                       OnClick="@(() => OnDeleteFeatureAsync(context))" />
+                                    </MudTooltip>
                                     <MudTooltip Text="Properties">
                                         <MudIconButton Icon="@Icons.Outlined.Settings"
                                                        Size="Size.Small"
@@ -150,7 +167,7 @@
                     }
                     else
                     {
-                        if (_selectedApplicationId != 0 && _selectedEnvironmentId != 0)
+                        if (null != _selectedApplication && null != _selectedEnvironment)
                         {
                             <MudText Class="pt-5"
                                      Typo="Typo.h6">
