@@ -71,7 +71,11 @@ namespace Microsoft.Extensions.DependencyInjection
             });
 
             // Register the data-context factory.
-            serviceCollection.Add<DbContextFactory<OliveDbContext>>(serviceLifetime);
+            serviceCollection.AddDbContextFactory<OliveDbContext>(builder =>
+            {
+                // Configure the options.
+                builder.UseSqlServer(repositoryOptions.ConnectionString);
+            });
 
             // Register the repositories.
             serviceCollection.Add<IApplicationRepository, ApplicationRepository>(serviceLifetime);

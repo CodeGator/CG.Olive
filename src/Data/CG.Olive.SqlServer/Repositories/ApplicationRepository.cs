@@ -1,14 +1,13 @@
 ﻿using CG.Business.Repositories;
-using CG.Linq.EFCore;
 using CG.Linq.EFCore.Repositories;
 using CG.Olive.Repositories;
 using CG.Olive.SqlServer.Options;
 using CG.Validations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,7 +35,7 @@ namespace CG.Olive.SqlServer.Repositories
         /// <param name="factory">The data-context factory for the repository.</param>
         public ApplicationRepository(
             IOptions<OliveRepositoryOptions> options,
-            DbContextFactory<OliveDbContext> factory
+            IDbContextFactory<OliveDbContext> factory
             ) : base(options, factory)
         {
 
@@ -56,7 +55,7 @@ namespace CG.Olive.SqlServer.Repositories
             try
             {
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Defer to the data-context.
                 var query = context.Applications.AsQueryable();
@@ -90,7 +89,7 @@ namespace CG.Olive.SqlServer.Repositories
                 Guard.Instance().ThrowIfNull(model, nameof(model));
 
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Add to the data-context.
                 var entity = await context.Applications.AddAsync(
@@ -133,7 +132,7 @@ namespace CG.Olive.SqlServer.Repositories
                 Guard.Instance().ThrowIfNull(model, nameof(model));
 
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Find the model in the data-context.
                 var originalModel = context.Applications.Find(
@@ -192,7 +191,7 @@ namespace CG.Olive.SqlServer.Repositories
                 Guard.Instance().ThrowIfNull(model, nameof(model));
 
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Defer to the data-context.
                 context.Applications.Remove(model);

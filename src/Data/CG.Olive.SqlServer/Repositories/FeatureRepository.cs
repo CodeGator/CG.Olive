@@ -36,7 +36,7 @@ namespace CG.Olive.SqlServer.Repositories
         /// <param name="factory">The data-context factory for the repository.</param>
         public FeatureRepository(
             IOptions<OliveRepositoryOptions> options,
-            DbContextFactory<OliveDbContext> factory
+            IDbContextFactory<OliveDbContext> factory
             ) : base(options, factory)
         {
             
@@ -56,7 +56,7 @@ namespace CG.Olive.SqlServer.Repositories
             try
             {
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Defer to the data-context.
                 var query = context.Features.AsQueryable()
@@ -93,7 +93,7 @@ namespace CG.Olive.SqlServer.Repositories
                 Guard.Instance().ThrowIfNull(model, nameof(model));
 
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Prevent EFCore from doing anything goofy with any of
                 //   the associated objects.
@@ -141,7 +141,7 @@ namespace CG.Olive.SqlServer.Repositories
                 Guard.Instance().ThrowIfNull(model, nameof(model));
 
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Find the model in the data-context.
                 var originalModel = context.Features.Find(
@@ -201,7 +201,7 @@ namespace CG.Olive.SqlServer.Repositories
                 Guard.Instance().ThrowIfNull(model, nameof(model));
 
                 // Create a context.
-                var context = Factory.Create();
+                var context = Factory.CreateDbContext();
 
                 // Defer to the data-context.
                 context.Features.Remove(model);
