@@ -1,4 +1,5 @@
-﻿using CG.Olive.Web.Options;
+﻿
+using CG.Olive.Web.Options;
 using CG.Validations;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
