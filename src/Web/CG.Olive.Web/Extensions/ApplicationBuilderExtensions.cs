@@ -2,6 +2,7 @@
 using CG.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 
@@ -27,16 +28,19 @@ namespace Microsoft.AspNetCore.Builder
         /// the operation.</param>
         /// <param name="webHostEnvironment">The web host environment to use 
         /// for the operation.</param>
+        /// <param name="configuration">The configuration ot use for the operation.</param>
         /// <returns>The value of the <paramref name="applicationBuilder"/> parameter,
         /// for chaining calls together.</returns>
         public static IApplicationBuilder UseCustomBlazor(
             this IApplicationBuilder applicationBuilder,
-            IWebHostEnvironment webHostEnvironment
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration
             )
         {
             // Validate the parameters before attempting to use them.
             Guard.Instance().ThrowIfNull(applicationBuilder, nameof(applicationBuilder))
-                .ThrowIfNull(webHostEnvironment, nameof(webHostEnvironment));
+                .ThrowIfNull(webHostEnvironment, nameof(webHostEnvironment))
+                .ThrowIfNull(configuration, nameof(configuration));
 
             // Are we running in a development environment?
             if (webHostEnvironment.IsDevelopment())
@@ -86,7 +90,8 @@ namespace Microsoft.AspNetCore.Builder
 
             // Use the Olive epositories.
             applicationBuilder.UseRepositories(
-                "CG.Olive:Repositories"
+                webHostEnvironment,
+                configuration.GetSection("Repositories")
                 );
 
             // Return the application builder.

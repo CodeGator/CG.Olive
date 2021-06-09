@@ -115,7 +115,10 @@ namespace CG.Olive.Web
                 .ThrowIfNull(env, nameof(env));
 
             // Use custom Blazor logic.
-            app.UseCustomBlazor(env);
+            app.UseCustomBlazor(
+                env,
+                Configuration.GetSection("CG.Olive")
+                );
         }
 
         #endregion
