@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// This class contains only those extension methods that are related to the logic
     /// within the <see cref="CG.Olive.SqlServer"/> library itself. 
     /// </remarks>
-    public static partial class OliveServiceCollectionExtensions
+    public static partial class ServiceCollectionExtensions
     {
         // *******************************************************************
         // Public methods.

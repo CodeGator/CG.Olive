@@ -1,6 +1,7 @@
 ﻿using CG.Olive.SqlServer;
 using CG.Olive.SqlServer.Options;
 using CG.Validations;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace Microsoft.AspNetCore.Builder
@@ -13,7 +14,7 @@ namespace Microsoft.AspNetCore.Builder
     /// This class contains only those extension methods that are related to the logic
     /// within the <see cref="CG.Olive.SqlServer"/> library itself. 
     /// </remarks>
-    public static partial class OliveApplicationBuilderExtensions
+    public static partial class ApplicationBuilderExtensions
     {
         // *******************************************************************
         // Public methods.
@@ -27,18 +28,18 @@ namespace Microsoft.AspNetCore.Builder
         /// </summary>
         /// <param name="applicationBuilder">The application builder to use for
         /// the operation.</param>
-        /// <param name="configurationSection">The configuration section name
-        /// that corresponds with the repositories.</param>
+        /// <param name="hostEnvironment">The host environment to use for the 
+        /// operation..</param>
         /// <returns>The value of the <paramref name="applicationBuilder"/> parameter,
         /// for chaining calls together.</returns>
         public static IApplicationBuilder UseSqlServerRepositories(
             this IApplicationBuilder applicationBuilder,
-            string configurationSection
+            IHostEnvironment hostEnvironment
             )
         {
             // Validate the parameters before attempting to use them.
             Guard.Instance().ThrowIfNull(applicationBuilder, nameof(applicationBuilder))
-                .ThrowIfNullOrEmpty(configurationSection, nameof(configurationSection));
+                .ThrowIfNull(hostEnvironment, nameof(hostEnvironment));
 
             // Startup EFCore.
             applicationBuilder.UseEFCore<OliveDbContext, OliveRepositoryOptions>(
