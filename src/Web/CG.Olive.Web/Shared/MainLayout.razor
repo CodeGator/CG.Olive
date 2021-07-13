@@ -48,7 +48,7 @@
         @Body
         <MudAppBar Elevation="1" 
                    Style="top: auto; bottom: 0; background-color: gray">
-            <p class="small">Copyright &copy; 2018 - @DateTime.Today.Year by CODEGATOR. All rights reserved</p>
+            <p class="small">@typeof(MainLayout).Assembly.ReadCopyright()</p>
         </MudAppBar>
     </MudMainContent>
 </MudLayout>
